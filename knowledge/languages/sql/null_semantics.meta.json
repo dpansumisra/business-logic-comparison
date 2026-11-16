@@ -1,0 +1,29 @@
+{
+  "dataset_id": "LANG_SQL_NULL_001",
+  "name": "SQL Null Semantics and Dialect Differences",
+  "description": "PostgreSQL, Oracle, SQL Server, and MySQL null handling, COALESCE, NVL, IFNULL, and empty string treatment.",
+  "category": "languages",
+  "subcategory": "sql_null",
+  "version": "1.0.0",
+  "status": "active",
+  "content_path": "knowledge/languages/sql/null_semantics.json",
+  "record_count": 2,
+  "supported_languages": ["SQL"],
+  "supported_formats": ["sql_null"],
+  "tags": ["sql", "null", "coalesce", "nvl", "oracle_empty_string"],
+  "concepts": ["CONCEPT_SQL_NULL", "NULL_CHECK"],
+  "when_to_retrieve": [
+    "When migrating SQL queries to Python, pandas, or PySpark"
+  ],
+  "when_not_to_retrieve": [
+    "When working with non-null columns"
+  ],
+  "retrieval_guidance": "Watch out for Oracle's unique behavior where empty strings '' are stored and evaluated as NULL.",
+  "source_type": "language_spec",
+  "sources": ["SRC_POSTGRES_DOCS"],
+  "date_created": "2026-11-16",
+  "date_update": "2026-11-16",
+  "date_current": null,
+  "license": "See individual source records",
+  "schema_ref": "schemas/null.schema.json"
+}

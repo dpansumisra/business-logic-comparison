@@ -1,0 +1,47 @@
+{
+  "dataset_id": "LANG_SAS_DATES_001",
+  "version": "1.0.0",
+  "records": [
+    {
+      "record_id": "SAS_SEM_DATE_ADDITION",
+      "concept_id": "DATE_ARITHMETIC",
+      "name": "SAS Date Value Numeric Addition (+ n days)",
+      "interpretation": {
+        "description": "In SAS DATA step, `new_date = old_date + 30;` adds 30 days because SAS date unit is integer days.",
+        "storage": "64-bit float containing day count since 1960-01-01",
+        "missing_behavior": "If old_date is missing (.), new_date becomes missing (.)"
+      },
+      "validation_rules": [
+        "In Python datetime.date, `old_date + 30` raises TypeError: unsupported operand type(s) for +: 'datetime.date' and 'int'",
+        "Target correction in Python must be: `old_date + datetime.timedelta(days=30)`"
+      ],
+      "source_references": ["SRC_SAS_DOCS"]
+    },
+    {
+      "record_id": "SAS_SEM_DATETIME_ADDITION",
+      "concept_id": "DATE_ARITHMETIC",
+      "name": "SAS Datetime Value Numeric Addition (+ n seconds)",
+      "interpretation": {
+        "description": "In SAS DATA step, `new_dt = old_dt + 30;` adds 30 SECONDS, not 30 days! To add 30 days to a SAS datetime, code must do `old_dt + (30 * 86400)` or use INTNX.",
+        "storage": "64-bit float containing seconds since 1960-01-01 00:00:00"
+      },
+      "validation_rules": [
+        "Distinguish date addition (days) from datetime addition (seconds)"
+      ],
+      "source_references": ["SRC_SAS_DOCS"]
+    },
+    {
+      "record_id": "SAS_SEM_INTNX_MONTH",
+      "concept_id": "DATE_INTERVAL",
+      "name": "SAS INTNX Function (Interval Date Calculation)",
+      "interpretation": {
+        "description": "INTNX(interval, start-from, increment, alignment). Calculates date at start/middle/end of interval.",
+        "python_equivalent": "Requires dateutil.relativedelta or pandas DateOffset (e.g. pd.DateOffset(months=1))"
+      },
+      "validation_rules": [
+        "Do not replace INTNX('month', dt, 1) with timedelta(days=30) because calendar months have 28, 29, 30, or 31 days"
+      ],
+      "source_references": ["SRC_SAS_DOCS"]
+    }
+  ]
+}

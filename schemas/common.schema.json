@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://universal-data-knowledge.org/schemas/common.schema.json",
+  "title": "CommonSchemaDefinitions",
+  "description": "Shared definitions across universal data knowledge schemas",
+  "definitions": {
+    "stable_id": {
+      "type": "string",
+      "pattern": "^[A-Z0-9_]{3,64}$",
+      "description": "Permanent uppercase identifier with underscores"
+    },
+    "iso_date": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+      "description": "ISO-8601 calendar date YYYY-MM-DD"
+    },
+    "provenance_reference": {
+      "type": "object",
+      "required": ["source_id"],
+      "properties": {
+        "source_id": { "$ref": "#/definitions/stable_id" },
+        "section": { "type": "string" },
+        "url": { "type": "string", "format": "uri" },
+        "citation": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "compatibility_status": {
+      "type": "string",
+      "enum": [
+        "EQUIVALENT",
+        "CONDITIONALLY_EQUIVALENT",
+        "CONVERTIBLE",
+        "INCOMPATIBLE",
+        "UNCERTAIN"
+      ]
+    },
+    "confidence_level": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "verified"]
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://universal-data-knowledge.org/schemas/registry.schema.json",
+  "title": "CentralKnowledgeRegistry",
+  "type": "object",
+  "required": ["registry_version", "last_updated", "categories", "datasets"],
+  "properties": {
+    "registry_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "last_updated": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["category_id", "name", "descriptor_path", "content_path", "tags"],
+        "properties": {
+          "category_id": { "type": "string" },
+          "name": { "type": "string" },
+          "descriptor_path": { "type": "string" },
+          "content_path": { "type": "string" },
+          "tags": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "datasets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["dataset_id", "name", "category", "subcategory", "descriptor_path", "content_path", "status"],
+        "properties": {
+          "dataset_id": { "type": "string" },
+          "name": { "type": "string" },
+          "category": { "type": "string" },
+          "subcategory": { "type": "string" },
+          "descriptor_path": { "type": "string" },
+          "content_path": { "type": "string" },
+          "status": { "type": "string", "enum": ["active", "deprecated", "draft"] },
+          "version": { "type": "string" },
+          "tags": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

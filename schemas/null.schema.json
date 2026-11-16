@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://universal-data-knowledge.org/schemas/null.schema.json",
+  "title": "NullAndMissingValueSchema",
+  "type": "object",
+  "required": ["dataset_id", "version", "records"],
+  "properties": {
+    "dataset_id": { "type": "string" },
+    "version": { "type": "string" },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["record_id", "concept_id", "name", "language"],
+        "properties": {
+          "record_id": { "type": "string" },
+          "concept_id": { "type": "string" },
+          "name": { "type": "string" },
+          "language": { "type": "string" },
+          "representation": { "type": "string" },
+          "data_type_context": { "type": "string" },
+          "equality_behavior": { "type": "string" },
+          "truthiness": { "type": "string" },
+          "ordering_behavior": { "type": "string" },
+          "aggregation_behavior": { "type": "string" },
+          "serialization_behavior": { "type": "string" },
+          "sentinel_values": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "silent_gotchas": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "migration_preservation_rules": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "source_references": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

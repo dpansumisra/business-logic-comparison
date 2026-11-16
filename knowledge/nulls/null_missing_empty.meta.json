@@ -1,0 +1,62 @@
+{
+  "dataset_id": "NULL_MISSING_EMPTY_001",
+  "name": "Null, Missing, and Empty Value Concepts",
+  "description": "Distinctions between database NULL, Python None, JavaScript null/undefined, SAS missing (. and .A-.Z), empty string, and NaN.",
+  "category": "nulls",
+  "subcategory": "concepts",
+  "version": "1.0.0",
+  "status": "active",
+  "content_path": "knowledge/nulls/null_missing_empty.json",
+  "record_count": 5,
+  "supported_languages": [
+    "SAS",
+    "SQL",
+    "Python",
+    "JavaScript",
+    "Java",
+    "C#"
+  ],
+  "supported_formats": [
+    "sql_null",
+    "python_none",
+    "sas_special_missing",
+    "js_null_undefined",
+    "empty_string"
+  ],
+  "tags": [
+    "null",
+    "missing",
+    "empty_string",
+    "sas_missing",
+    "none",
+    "undefined",
+    "nan",
+    "three_valued_logic"
+  ],
+  "concepts": [
+    "NULL_CHECK",
+    "MISSING_VALUE_COMPARISON",
+    "TRUTHINESS_EVALUATION"
+  ],
+  "when_to_retrieve": [
+    "When migrating conditional checks (e.g. IF var THEN / WHERE col IS NULL / if val:)",
+    "When translating filter predicates and join logic",
+    "When converting SAS missing values or SQL NULL columns to Python"
+  ],
+  "when_not_to_retrieve": [
+    "When handling strictly non-nullable primitive operations"
+  ],
+  "retrieval_guidance": "In SAS, missing numeric values evaluate as smaller than any negative number (.-Z < . < -1e308). In Python, None < 0 raises TypeError.",
+  "source_type": "combined",
+  "sources": [
+    "SRC_SAS_DOCS",
+    "SRC_POSTGRES_DOCS",
+    "SRC_PYTHON_DOCS",
+    "SRC_ECMA_262"
+  ],
+  "date_created": "2026-11-16",
+  "date_update": "2026-11-16",
+  "date_current": null,
+  "license": "See individual source records",
+  "schema_ref": "schemas/null.schema.json"
+}

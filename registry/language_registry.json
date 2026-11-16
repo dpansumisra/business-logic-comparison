@@ -1,0 +1,90 @@
+{
+  "registry_version": "1.0.0",
+  "last_updated": "2026-11-16",
+  "languages": [
+    {
+      "language_id": "LANG_SAS",
+      "name": "SAS",
+      "dialects": ["Base SAS", "SAS 9.4", "SAS Viya"],
+      "execution_model": "DATA step, SQL procedure, macro processor",
+      "epoch_date": "1960-01-01",
+      "date_unit": "days",
+      "datetime_unit": "seconds",
+      "missing_value_syntax": [".", ".A", ".B", ".C", ".D", ".E", ".F", ".G", ".H", ".I", ".J", ".K", ".L", ".M", ".N", ".O", ".P", ".Q", ".R", ".S", ".T", ".U", ".V", ".W", ".X", ".Y", ".Z", "._"],
+      "default_numeric_type": "IEEE 754 64-bit float",
+      "notes": "All SAS numeric variables are stored as double precision floats. Missing values are numerically less than all numbers."
+    },
+    {
+      "language_id": "LANG_SQL",
+      "name": "SQL",
+      "dialects": ["ANSI SQL", "PostgreSQL", "Oracle", "SQL Server", "MySQL", "Snowflake", "BigQuery"],
+      "execution_model": "Declarative relational query engine",
+      "epoch_date": null,
+      "date_unit": "calendar date",
+      "datetime_unit": "timestamp",
+      "missing_value_syntax": ["NULL"],
+      "default_numeric_type": "Dialect dependent (NUMERIC, DECIMAL, INT, BIGINT, FLOAT)",
+      "notes": "Three-valued logic (TRUE, FALSE, UNKNOWN). NULL = NULL yields UNKNOWN."
+    },
+    {
+      "language_id": "LANG_PYTHON",
+      "name": "Python",
+      "dialects": ["Python 3.10", "Python 3.11", "Python 3.12"],
+      "execution_model": "Dynamically typed bytecode interpreted runtime",
+      "epoch_date": "1970-01-01 (time module) / calendar proleptic Gregorian (datetime module)",
+      "date_unit": "datetime.date",
+      "datetime_unit": "datetime.datetime (microsecond precision)",
+      "missing_value_syntax": ["None", "float('nan')", "pandas.NA"],
+      "default_numeric_type": "int (arbitrary precision), float (IEEE 754 64-bit)",
+      "notes": "Division (/) always produces float; integer division is (//) flooring towards negative infinity."
+    },
+    {
+      "language_id": "LANG_JAVASCRIPT",
+      "name": "JavaScript",
+      "dialects": ["ES2020", "ES2022", "ES2024", "Node.js", "Browser"],
+      "execution_model": "Dynamically typed event-driven ECMAScript engine",
+      "epoch_date": "1970-01-01",
+      "date_unit": "Date (milliseconds since Unix epoch)",
+      "datetime_unit": "Date (milliseconds since Unix epoch)",
+      "missing_value_syntax": ["null", "undefined", "NaN"],
+      "default_numeric_type": "Number (IEEE 754 64-bit float), BigInt",
+      "notes": "Number.MAX_SAFE_INTEGER is 2^53 - 1. Standard division always produces float. null is object; undefined is undefined."
+    },
+    {
+      "language_id": "LANG_CPP",
+      "name": "C++",
+      "dialects": ["C++17", "C++20", "C++23"],
+      "execution_model": "Statically typed compiled native language",
+      "epoch_date": "std::chrono::system_clock (typically Unix epoch 1970-01-01)",
+      "date_unit": "std::chrono::year_month_day",
+      "datetime_unit": "std::chrono::time_point",
+      "missing_value_syntax": ["nullptr", "std::nullopt"],
+      "default_numeric_type": "int (32-bit signed), long long (64-bit), double (64-bit float)",
+      "notes": "Integer division truncates towards zero (C++11 onwards). Signed integer overflow is Undefined Behavior (UB)."
+    },
+    {
+      "language_id": "LANG_JAVA",
+      "name": "Java",
+      "dialects": ["Java 17 LTS", "Java 21 LTS"],
+      "execution_model": "Statically typed JVM bytecode execution",
+      "epoch_date": "1970-01-01 (java.time.Instant)",
+      "date_unit": "java.time.LocalDate",
+      "datetime_unit": "java.time.LocalDateTime / java.time.ZonedDateTime",
+      "missing_value_syntax": ["null", "Optional.empty()"],
+      "default_numeric_type": "int (32-bit signed 2's complement), double",
+      "notes": "Strict 2's complement wrapping on overflow. java.time package is ISO-8601 proleptic Gregorian."
+    },
+    {
+      "language_id": "LANG_CSHARP",
+      "name": "C#",
+      "dialects": [".NET 8", ".NET 9"],
+      "execution_model": "Statically typed CLR runtime execution",
+      "epoch_date": "0001-01-01 (System.DateTime 100-nanosecond ticks)",
+      "date_unit": "System.DateOnly",
+      "datetime_unit": "System.DateTime / System.DateTimeOffset",
+      "missing_value_syntax": ["null", "Nullable<T>"],
+      "default_numeric_type": "int, double, decimal (128-bit decimal floating-point)",
+      "notes": "System.Decimal provides 28-29 significant digits for financial calculations."
+    }
+  ]
+}

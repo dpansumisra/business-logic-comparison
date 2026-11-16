@@ -1,0 +1,32 @@
+{
+  "dataset_id": "LANG_PYTHON_DATETIME_001",
+  "version": "1.0.0",
+  "records": [
+    {
+      "record_id": "PY_SEM_DATE_TIMEDELTA",
+      "concept_id": "DATE_ARITHMETIC",
+      "name": "Python datetime.date and timedelta Addition",
+      "interpretation": {
+        "description": "date objects can only be added to timedelta objects. Adding an integer directly throws TypeError.",
+        "example": "import datetime; d = datetime.date(2026, 11, 16); result = d + datetime.timedelta(days=30)"
+      },
+      "validation_rules": [
+        "Ensure right-hand operand is wrapped in datetime.timedelta(days=...)"
+      ],
+      "source_references": ["SRC_PYTHON_DOCS"]
+    },
+    {
+      "record_id": "PY_SEM_NAIVE_DATETIME_COMPARISON",
+      "concept_id": "CONCEPT_TIMESTAMP_INSTANT",
+      "name": "Python Naive vs Aware datetime Comparison Restriction",
+      "interpretation": {
+        "description": "In Python 3, comparing a timezone-naive datetime with a timezone-aware datetime raises TypeError: can't compare offset-naive and offset-aware datetimes.",
+        "resolution": "Either attach timezone using dt.replace(tzinfo=...) or convert to UTC via dt.astimezone(datetime.timezone.utc)"
+      },
+      "validation_rules": [
+        "Normalize all datetime objects to UTC before comparison"
+      ],
+      "source_references": ["SRC_PYTHON_DOCS"]
+    }
+  ]
+}

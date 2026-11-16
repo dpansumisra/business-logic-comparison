@@ -1,0 +1,55 @@
+{
+  "dataset_id": "MAP_DATES_001",
+  "name": "Cross-Language Date and Timestamp Compatibility Graph",
+  "description": "Deterministic conversion formulas, differences, edge cases, and preservation rules for date/time migrations across SAS, Python, SQL, JS, and Java.",
+  "category": "cross_language_mappings",
+  "subcategory": "dates",
+  "version": "1.0.0",
+  "status": "active",
+  "content_path": "knowledge/cross_language_mappings/date_mappings.json",
+  "record_count": 3,
+  "supported_languages": [
+    "SAS",
+    "Python",
+    "SQL",
+    "JavaScript",
+    "Java"
+  ],
+  "supported_formats": [
+    "sas_numeric_date",
+    "sas_datetime",
+    "python_datetime_date",
+    "python_datetime_datetime"
+  ],
+  "tags": [
+    "cross_language",
+    "mappings",
+    "sas_to_python",
+    "epoch_conversion",
+    "preservation_rules"
+  ],
+  "concepts": [
+    "CONCEPT_CALENDAR_DATE",
+    "CONCEPT_TIMESTAMP_INSTANT",
+    "DATE_CONVERSION",
+    "DATE_ARITHMETIC"
+  ],
+  "when_to_retrieve": [
+    "When migrating date logic between SAS and Python or SQL and Python",
+    "When determining semantic equivalence between date expressions"
+  ],
+  "when_not_to_retrieve": [
+    "When migrating non-temporal data"
+  ],
+  "retrieval_guidance": "Always look up the exact source and target representation pair.",
+  "source_type": "combined",
+  "sources": [
+    "SRC_SAS_DOCS",
+    "SRC_PYTHON_DOCS"
+  ],
+  "date_created": "2026-11-16",
+  "date_update": "2026-11-16",
+  "date_current": null,
+  "license": "See individual source records",
+  "schema_ref": "schemas/mapping.schema.json"
+}

@@ -1,0 +1,162 @@
+{
+  "dataset_id": "MAP_DATES_001",
+  "version": "1.0.0",
+  "records": [
+    {
+      "mapping_id": "MAP_SAS_DATE_TO_PYTHON_DATE",
+      "concept_id": "CONCEPT_CALENDAR_DATE",
+      "source": {
+        "language": "SAS",
+        "representation": "numeric_date",
+        "epoch": "1960-01-01",
+        "unit": "days",
+        "type": "64_bit_float"
+      },
+      "target": {
+        "language": "Python",
+        "representation": "datetime.date",
+        "epoch": null,
+        "unit": "calendar_date",
+        "type": "datetime.date"
+      },
+      "compatibility": "CONVERTIBLE",
+      "conversion": {
+        "strategy": "add_source_day_offset_to_epoch",
+        "formula_description": "Add the SAS numeric date value as a number of calendar days to 1960-01-01.",
+        "code_example": "datetime.date(1960, 1, 1) + datetime.timedelta(days=int(sas_date))",
+        "target_library": "datetime"
+      },
+      "semantic_differences": [
+        {
+          "difference": "SAS date is stored as a numeric day offset while Python datetime.date represents a calendar date.",
+          "risk": "incorrect_unit_conversion",
+          "severity": "critical"
+        },
+        {
+          "difference": "In SAS, adding an integer directly adds days (date + 30). In Python, adding an integer to datetime.date raises TypeError.",
+          "risk": "runtime_type_error",
+          "severity": "critical"
+        }
+      ],
+      "edge_cases": [
+        "negative_date_values_pre_1960",
+        "leap_years",
+        "SAS_missing_values"
+      ],
+      "preservation_rules": [
+        "Do not multiply the SAS date value by 86400.",
+        "Handle SAS missing values (.) before performing date arithmetic: return None if sas_date is None or pd.isna(sas_date).",
+        "Use datetime.timedelta(days=...) for date addition."
+      ],
+      "related_knowledge": [
+        "EPOCH_SAS_DATE",
+        "SAS_SEM_DATE_ADDITION",
+        "PY_SEM_DATE_TIMEDELTA",
+        "NULL_SAS_NUMERIC_MISSING"
+      ],
+      "confidence": "verified",
+      "evidence_sources": [
+        "SRC_SAS_DOCS",
+        "SRC_PYTHON_DOCS"
+      ]
+    },
+    {
+      "mapping_id": "MAP_SAS_DATETIME_TO_PYTHON_DATETIME",
+      "concept_id": "CONCEPT_TIMESTAMP_INSTANT",
+      "source": {
+        "language": "SAS",
+        "representation": "numeric_datetime",
+        "epoch": "1960-01-01T00:00:00",
+        "unit": "seconds",
+        "type": "64_bit_float"
+      },
+      "target": {
+        "language": "Python",
+        "representation": "datetime.datetime",
+        "epoch": null,
+        "unit": "timestamp",
+        "type": "datetime.datetime"
+      },
+      "compatibility": "CONVERTIBLE",
+      "conversion": {
+        "strategy": "add_source_second_offset_to_epoch",
+        "formula_description": "Add the SAS numeric datetime value as seconds to datetime.datetime(1960, 1, 1, 0, 0, 0).",
+        "code_example": "datetime.datetime(1960, 1, 1) + datetime.timedelta(seconds=sas_dt)",
+        "target_library": "datetime"
+      },
+      "semantic_differences": [
+        {
+          "difference": "SAS datetime uses seconds since 1960-01-01, whereas Unix timestamps use seconds since 1970-01-01.",
+          "risk": "epoch_mismatch_ten_year_error",
+          "severity": "critical"
+        }
+      ],
+      "edge_cases": [
+        "subsecond_microsecond_precision",
+        "missing_values",
+        "timezone_naive_assumptions"
+      ],
+      "preservation_rules": [
+        "Do not pass SAS datetime directly into datetime.datetime.fromtimestamp() as that expects Unix 1970 epoch.",
+        "Check for SAS missing values before conversion."
+      ],
+      "related_knowledge": [
+        "EPOCH_SAS_DATETIME",
+        "EPOCH_UNIX_SECONDS"
+      ],
+      "confidence": "verified",
+      "evidence_sources": [
+        "SRC_SAS_DOCS",
+        "SRC_PYTHON_DOCS"
+      ]
+    },
+    {
+      "mapping_id": "MAP_SQL_DATE_TO_PYTHON_DATE",
+      "concept_id": "CONCEPT_CALENDAR_DATE",
+      "source": {
+        "language": "SQL",
+        "representation": "DATE",
+        "epoch": null,
+        "unit": "calendar_date",
+        "type": "DATE"
+      },
+      "target": {
+        "language": "Python",
+        "representation": "datetime.date",
+        "epoch": null,
+        "unit": "calendar_date",
+        "type": "datetime.date"
+      },
+      "compatibility": "EQUIVALENT",
+      "conversion": {
+        "strategy": "direct_calendar_date_mapping",
+        "formula_description": "Maps SQL DATE directly to Python datetime.date (supported natively by PEP 249 DB-API drivers).",
+        "code_example": "row['sql_date'] # driver automatically returns datetime.date",
+        "target_library": "datetime"
+      },
+      "semantic_differences": [
+        {
+          "difference": "SQL DATE range may exceed Python 0001-01-01 to 9999-12-31 boundary in PostgreSQL/Oracle (e.g. BC dates).",
+          "risk": "value_out_of_range",
+          "severity": "medium"
+        }
+      ],
+      "edge_cases": [
+        "proleptic_gregorian_prior_to_1582",
+        "sql_null_to_none"
+      ],
+      "preservation_rules": [
+        "Ensure NULL is converted to None"
+      ],
+      "related_knowledge": [
+        "NULL_SQL",
+        "NULL_PYTHON_NONE"
+      ],
+      "confidence": "high",
+      "evidence_sources": [
+        "SRC_POSTGRES_DOCS",
+        "SRC_PYTHON_DOCS"
+      ]
+    }
+  ]
+}

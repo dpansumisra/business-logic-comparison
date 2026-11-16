@@ -1,0 +1,47 @@
+{
+  "dataset_id": "LANG_NULL_SEMANTICS_001",
+  "name": "Language-Specific Null and Missing Comparison Semantics",
+  "description": "Exhaustive matrix of null equality, comparison, sorting, and truthiness behavior across SQL, Python, SAS, JavaScript, and Java.",
+  "category": "nulls",
+  "subcategory": "language_null",
+  "version": "1.0.0",
+  "status": "active",
+  "content_path": "knowledge/nulls/language_null_semantics.json",
+  "record_count": 4,
+  "supported_languages": [
+    "SAS",
+    "SQL",
+    "Python",
+    "JavaScript"
+  ],
+  "supported_formats": ["matrix_comparison"],
+  "tags": [
+    "null",
+    "comparison",
+    "truthiness",
+    "ordering",
+    "aggregation"
+  ],
+  "concepts": [
+    "NULL_COMPARISON",
+    "TRUTHINESS_EVALUATION"
+  ],
+  "when_to_retrieve": [
+    "When evaluating boolean condition equivalence between source and target code containing nulls"
+  ],
+  "when_not_to_retrieve": [
+    "When variables are statically proven non-null"
+  ],
+  "retrieval_guidance": "Compare how each language evaluates: null == null, null < 0, bool(null), null in [1, 2].",
+  "source_type": "combined",
+  "sources": [
+    "SRC_SAS_DOCS",
+    "SRC_PYTHON_DOCS",
+    "SRC_POSTGRES_DOCS"
+  ],
+  "date_created": "2026-11-16",
+  "date_update": "2026-11-16",
+  "date_current": null,
+  "license": "See individual source records",
+  "schema_ref": "schemas/null.schema.json"
+}

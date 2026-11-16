@@ -1,0 +1,42 @@
+{
+  "dataset_id": "LANG_SQL_NULL_001",
+  "version": "1.0.0",
+  "records": [
+    {
+      "record_id": "SQL_SEM_COALESCE_BEHAVIOR",
+      "concept_id": "NULL_CHECK",
+      "name": "SQL COALESCE Function (Short-circuit evaluation)",
+      "language": "SQL",
+      "representation": "COALESCE(val1, val2, ...)",
+      "equality_behavior": "Returns first non-null argument",
+      "truthiness": "Dependent on returned value",
+      "ordering_behavior": "Normal",
+      "aggregation_behavior": "Evaluates per-row",
+      "silent_gotchas": [
+        "In Python, `val1 or val2` is NOT identical to COALESCE because `0 or 5` evaluates to 5 in Python, whereas `COALESCE(0, 5)` evaluates to 0!"
+      ],
+      "migration_preservation_rules": [
+        "In Python, implement COALESCE as: `val1 if val1 is not None else val2` (never use `val1 or val2` when 0 or '' is valid)"
+      ],
+      "source_references": ["SRC_POSTGRES_DOCS"]
+    },
+    {
+      "record_id": "SQL_SEM_ORACLE_EMPTY_STRING_NULL",
+      "concept_id": "CONCEPT_SQL_NULL",
+      "name": "Oracle SQL Empty String Treatment as NULL",
+      "language": "SQL",
+      "representation": "''",
+      "equality_behavior": "In Oracle: '' IS NULL is TRUE; '' = '' is UNKNOWN (treated as NULL)",
+      "truthiness": "Treated as NULL",
+      "ordering_behavior": "Sorts with NULLs",
+      "aggregation_behavior": "Excluded from aggregate functions in Oracle",
+      "silent_gotchas": [
+        "Queries expecting Oracle empty string semantics will break when ported to PostgreSQL or Python where '' is a distinct valid non-null string"
+      ],
+      "migration_preservation_rules": [
+        "When migrating Oracle SQL to Python, explicitly test: `val is None or val == ''`"
+      ],
+      "source_references": ["SRC_POSTGRES_DOCS"]
+    }
+  ]
+}

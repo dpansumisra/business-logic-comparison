@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://universal-data-knowledge.org/schemas/source.schema.json",
+  "title": "SourceCatalogSchema",
+  "type": "object",
+  "required": ["catalog_version", "sources"],
+  "properties": {
+    "catalog_version": { "type": "string" },
+    "last_updated": { "type": "string" },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "source_id",
+          "name",
+          "publisher",
+          "source_url",
+          "source_type",
+          "categories",
+          "collection_method",
+          "license",
+          "status"
+        ],
+        "properties": {
+          "source_id": { "type": "string", "pattern": "^SRC_[A-Z0-9_]{3,60}$" },
+          "name": { "type": "string" },
+          "publisher": { "type": "string" },
+          "source_url": { "type": "string" },
+          "source_type": {
+            "type": "string",
+            "enum": [
+              "official_standard_data",
+              "official_documentation",
+              "language_specification",
+              "rfc_standard",
+              "curated_analysis"
+            ]
+          },
+          "categories": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "collection_method": { "type": "string" },
+          "license": { "type": "string" },
+          "version": { "type": ["string", "null"] },
+          "retrieved_at": { "type": ["string", "null"] },
+          "checksum": { "type": ["string", "null"] },
+          "status": {
+            "type": "string",
+            "enum": ["pending_collection", "verified", "active", "deprecated", "stale"]
+          },
+          "update_frequency_days": { "type": "integer" }
+        }
+      }
+    }
+  }
+}

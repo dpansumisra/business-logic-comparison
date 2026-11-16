@@ -1,0 +1,58 @@
+{
+  "dataset_id": "PRECISION_ROUNDING_001",
+  "version": "1.0.0",
+  "records": [
+    {
+      "record_id": "RND_HALF_EVEN_VS_HALF_UP",
+      "concept_id": "CONCEPT_ROUNDING_MODE",
+      "name": "Round Half to Even (Banker's) vs Round Half Up / Half Away from Zero",
+      "rounding_behavior": "platform_specific",
+      "interpretation": {
+        "python_behavior": "Built-in round(x, n) uses ROUND_HALF_EVEN (ties round to nearest even digit). Example: round(2.5) == 2, round(3.5) == 4.",
+        "sas_behavior": "SAS ROUND(argument, round-off-unit) uses ROUND_HALF_AWAY_FROM_ZERO. Example: ROUND(2.5, 1) == 3, ROUND(3.5, 1) == 4.",
+        "sql_behavior": "Standard SQL ROUND(val, d) rounds half away from zero. Example: ROUND(2.5) == 3.",
+        "javascript_behavior": "Math.round(x) rounds towards +infinity on ties (e.g. Math.round(-2.5) == -2, Math.round(2.5) == 3)."
+      },
+      "risks": [
+        "Migrating SAS or SQL reports with monetary sums to Python round() causes total variances because Python round(2.5) is 2 instead of 3"
+      ],
+      "validation_rules": [
+        "In Python, to replicate SAS/SQL round-half-up, use: decimal.Decimal('2.5').quantize(Decimal('1'), rounding=decimal.ROUND_HALF_UP)"
+      ],
+      "source_references": ["SRC_PYTHON_DOCS", "SRC_SAS_DOCS"]
+    },
+    {
+      "record_id": "RND_FLOAT_DECIMAL_REPRESENTATION_ERROR",
+      "concept_id": "CONCEPT_ROUNDING_MODE",
+      "name": "Binary Floating-Point Decimal Representation Artifacts",
+      "interpretation": {
+        "description": "Numbers like 0.1, 0.05, 1.15 cannot be represented exactly in IEEE 754 binary floating point. 1.15 is internally 1.14999999999999991118...",
+        "consequence": "round(1.15, 1) in Python yields 1.1 because the internal float is slightly less than 1.15, failing the half-way threshold."
+      },
+      "risks": [
+        "Unexpected rounding results even when code appears mathematically sound"
+      ],
+      "validation_rules": [
+        "Never perform rounding operations on float for financial or accounting values; convert to Decimal first"
+      ],
+      "source_references": ["SRC_PYTHON_DOCS", "SRC_IEEE_754"]
+    },
+    {
+      "record_id": "RND_TRUNCATION_INT_CONVERSION",
+      "concept_id": "CONCEPT_ROUNDING_MODE",
+      "name": "Explicit Truncation (int, math.trunc, SAS INT)",
+      "interpretation": {
+        "python_int": "int(2.9) == 2, int(-2.9) == -2 (truncates fractional digits towards zero).",
+        "sas_int": "INT(2.9) == 2, INT(-2.9) == -2. SAS FLOOR(-2.9) == -3.",
+        "equivalence": "Python math.trunc() is equivalent to SAS INT() and C++ (int) cast."
+      },
+      "risks": [
+        "Confusing math.floor with int() or SAS INT for negative numbers"
+      ],
+      "validation_rules": [
+        "Verify negative number handling when converting truncation functions"
+      ],
+      "source_references": ["SRC_PYTHON_DOCS", "SRC_SAS_DOCS"]
+    }
+  ]
+}

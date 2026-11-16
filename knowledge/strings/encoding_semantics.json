@@ -1,0 +1,47 @@
+{
+  "dataset_id": "STRING_ENCODING_001",
+  "version": "1.0.0",
+  "records": [
+    {
+      "record_id": "STR_UTF8_VS_UTF16_INDEXING",
+      "concept_id": "STRING_INDEXING",
+      "name": "Unicode Code Point vs UTF-16 Code Unit String Indexing",
+      "encoding_standard": "Unicode 15.0",
+      "code_unit_size": "Variable (1-4 bytes for UTF-8; 2 or 4 bytes for UTF-16)",
+      "indexing_semantics": "Python 3 indexes strings by Unicode code points (characters). JavaScript and Java index strings by 16-bit UTF-16 code units.",
+      "risks": [
+        "Characters outside BMP (such as emojis or rare CJK ideographs) take 1 index position in Python, but 2 index positions (surrogate pair) in JavaScript and Java",
+        "String slicing `s[0:1]` in JS slices half of a surrogate pair, resulting in an unprintable isolated high surrogate character"
+      ],
+      "migration_notes": "When migrating Python string indexing to JavaScript, use `Array.from(str)[i]` or iterator protocols to access code points rather than raw index `str[i]`.",
+      "source_references": ["SRC_PYTHON_DOCS", "SRC_ECMA_262"]
+    },
+    {
+      "record_id": "STR_UNICODE_NORMALIZATION_NFC_NFD",
+      "concept_id": "STRING_NORMALIZATION",
+      "name": "Unicode Normalization Forms (NFC Canonical Composition vs NFD Decomposition)",
+      "encoding_standard": "UAX #15: Unicode Normalization Forms",
+      "unicode_normalization_form": "NFC and NFD",
+      "case_folding_rules": "Canonical equivalence",
+      "indexing_semantics": "Visually identical characters (e.g. 'é' as U+00E9 vs 'e' + U+0301 combining acute) compare unequal without normalization",
+      "risks": [
+        "Database string equality lookups or hash map lookups fail when source data comes from macOS (NFD) and target operates in NFC"
+      ],
+      "migration_notes": "Use `unicodedata.normalize('NFC', text)` in Python when comparing strings from external systems.",
+      "source_references": ["SRC_UNICODE_CLDR", "SRC_PYTHON_DOCS"]
+    },
+    {
+      "record_id": "STR_CASE_FOLDING_TURKISH_I",
+      "concept_id": "CASE_FOLDING",
+      "name": "Locale-Sensitive Casing (The Turkish I Problem)",
+      "encoding_standard": "Unicode CLDR",
+      "case_folding_rules": "Locale sensitive (tr-TR has dotted 'i' / dotless 'I')",
+      "indexing_semantics": "Standard lower() / upper() assume English/Latin rules where 'I'.lower() -> 'i'. In Turkish, 'I'.lower() is 'ı' (dotless i).",
+      "risks": [
+        "Security vulnerabilities or syntax errors when lowercasing protocol keywords (e.g., 'HTTP' -> 'http' or 'SELECT' -> 'select') in Turkish locale"
+      ],
+      "migration_notes": "Use ASCII-invariant casing or explicit invariant culture for protocol and keyword parsing.",
+      "source_references": ["SRC_UNICODE_CLDR"]
+    }
+  ]
+}

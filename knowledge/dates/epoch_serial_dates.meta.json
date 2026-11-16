@@ -1,0 +1,60 @@
+{
+  "dataset_id": "EPOCH_SERIAL_DATES_001",
+  "name": "System Epochs and Serial Date Formats",
+  "description": "Epoch baselines, counting units (days, seconds, ms), leap year quirks, and arithmetic rules across SAS, Unix, Excel, and SQL engines.",
+  "category": "dates",
+  "subcategory": "epochs",
+  "version": "1.0.0",
+  "status": "active",
+  "content_path": "knowledge/dates/epoch_serial_dates.json",
+  "record_count": 4,
+  "supported_languages": [
+    "SAS",
+    "Python",
+    "SQL",
+    "JavaScript",
+    "Java",
+    "C++",
+    "C#"
+  ],
+  "supported_formats": [
+    "sas_numeric_date",
+    "sas_datetime",
+    "unix_timestamp_seconds",
+    "excel_serial_date"
+  ],
+  "tags": [
+    "epoch",
+    "serial_date",
+    "sas_date",
+    "sas_datetime",
+    "unix_timestamp",
+    "excel_serial",
+    "leap_year_bug"
+  ],
+  "concepts": [
+    "CONCEPT_CALENDAR_DATE",
+    "CONCEPT_TIMESTAMP_INSTANT",
+    "EPOCH_CONVERSION",
+    "DATE_ARITHMETIC"
+  ],
+  "when_to_retrieve": [
+    "When migrating SAS numeric dates or datetimes to Python, SQL, or Java",
+    "When converting Excel serial numbers to calendar dates",
+    "When converting integer/float offsets into timestamps"
+  ],
+  "when_not_to_retrieve": [
+    "When manipulating human-readable ISO-8601 strings without numeric offsets"
+  ],
+  "retrieval_guidance": "Distinguish SAS date (unit: days, epoch: 1960-01-01) from SAS datetime (unit: seconds, epoch: 1960-01-01). Mixing days and seconds results in multi-thousand-year offset errors.",
+  "source_type": "combined",
+  "sources": [
+    "SRC_SAS_DOCS",
+    "SRC_PYTHON_DOCS"
+  ],
+  "date_created": "2026-11-16",
+  "date_update": "2026-11-16",
+  "date_current": null,
+  "license": "See individual source records",
+  "schema_ref": "schemas/date.schema.json"
+}

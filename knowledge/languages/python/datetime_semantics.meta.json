@@ -1,0 +1,29 @@
+{
+  "dataset_id": "LANG_PYTHON_DATETIME_001",
+  "name": "Python datetime Module Semantics and Behaviors",
+  "description": "Rules for datetime.date, datetime.datetime, timedelta arithmetic, strptime/strftime formatting, and zoneinfo handling.",
+  "category": "languages",
+  "subcategory": "python_datetime",
+  "version": "1.0.0",
+  "status": "active",
+  "content_path": "knowledge/languages/python/datetime_semantics.json",
+  "record_count": 2,
+  "supported_languages": ["Python"],
+  "supported_formats": ["datetime_date", "datetime_datetime", "timedelta"],
+  "tags": ["python", "datetime", "timedelta", "strptime", "zoneinfo"],
+  "concepts": ["CONCEPT_CALENDAR_DATE", "CONCEPT_TIMESTAMP_INSTANT", "DATE_ARITHMETIC"],
+  "when_to_retrieve": [
+    "When target code in Python performs date arithmetic or timezone conversion"
+  ],
+  "when_not_to_retrieve": [
+    "When working purely with timestamps as raw Unix floats"
+  ],
+  "retrieval_guidance": "Python date + int raises TypeError. Arithmetic requires timedelta. Month arithmetic requires dateutil.relativedelta.",
+  "source_type": "language_spec",
+  "sources": ["SRC_PYTHON_DOCS"],
+  "date_created": "2026-11-16",
+  "date_update": "2026-11-16",
+  "date_current": null,
+  "license": "See individual source records",
+  "schema_ref": "schemas/date.schema.json"
+}

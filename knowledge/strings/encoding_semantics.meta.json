@@ -1,0 +1,54 @@
+{
+  "dataset_id": "STRING_ENCODING_001",
+  "name": "String Encoding, Normalization, and Collation Semantics",
+  "description": "Unicode standards, UTF-8 vs UTF-16 indexing differences, normalization forms (NFC, NFD), and locale-sensitive casing.",
+  "category": "strings",
+  "subcategory": "encoding",
+  "version": "1.0.0",
+  "status": "active",
+  "content_path": "knowledge/strings/encoding_semantics.json",
+  "record_count": 3,
+  "supported_languages": [
+    "Python",
+    "JavaScript",
+    "Java",
+    "C++",
+    "SQL",
+    "SAS"
+  ],
+  "supported_formats": ["utf8", "utf16", "ascii", "unicode_nfc", "unicode_nfd"],
+  "tags": [
+    "string",
+    "unicode",
+    "utf8",
+    "utf16",
+    "indexing",
+    "normalization",
+    "collation",
+    "turkish_i"
+  ],
+  "concepts": [
+    "STRING_INDEXING",
+    "STRING_NORMALIZATION",
+    "CASE_FOLDING"
+  ],
+  "when_to_retrieve": [
+    "When string slicing or length checks are migrated across Python, JavaScript, and Java",
+    "When comparing strings containing accents, combining characters, or emojis"
+  ],
+  "when_not_to_retrieve": [
+    "When handling strictly ASCII numbers or dates"
+  ],
+  "retrieval_guidance": "Python len('😀') is 1 (counts Unicode code points). JavaScript '😀'.length is 2 (counts UTF-16 code units / surrogate pairs). Java \"😀\".length() is 2.",
+  "source_type": "combined",
+  "sources": [
+    "SRC_UNICODE_CLDR",
+    "SRC_PYTHON_DOCS",
+    "SRC_ECMA_262"
+  ],
+  "date_created": "2026-11-16",
+  "date_update": "2026-11-16",
+  "date_current": null,
+  "license": "See individual source records",
+  "schema_ref": "schemas/string.schema.json"
+}

@@ -1,0 +1,65 @@
+{
+  "dataset_id": "TIMEZONE_SEMANTICS_001",
+  "version": "1.0.0",
+  "records": [
+    {
+      "record_id": "TZ_NAIVE_VS_AWARE",
+      "concept_id": "CONCEPT_TIMESTAMP_INSTANT",
+      "name": "Naive vs Timezone-Aware Datetime Semantics",
+      "timezone_aware": false,
+      "interpretation": {
+        "description": "Naive datetime holds year, month, day, hour, minute, second without offset or timezone context. Aware datetime includes timezone offset or IANA zone.",
+        "python_behavior": "Comparing naive and aware datetime raises TypeError. Converting naive to aware requires explicit tzinfo assignment or zoneinfo.ZoneInfo.",
+        "sas_behavior": "Standard SAS datetime values are wall-clock naive. SAS E8601DX format parses ISO offsets, but native numeric values have no tz attribute."
+      },
+      "ambiguity": {
+        "is_ambiguous": true,
+        "reason": "Naive datetimes cannot be compared across different locales or converted accurately across DST boundaries."
+      },
+      "canonical_representation": "UTC timestamp with explicit 'Z' or offset",
+      "validation_rules": [
+        "Never perform arithmetic between naive and aware timestamps",
+        "Migration from SAS to Python must explicitly declare whether wall-clock naive or UTC-aware is intended"
+      ],
+      "source_references": ["SRC_PYTHON_DOCS"]
+    },
+    {
+      "record_id": "TZ_DST_GAP_AND_FOLD",
+      "concept_id": "CONCEPT_TIMESTAMP_INSTANT",
+      "name": "Daylight Saving Transitions (Spring Gap and Autumn Fold)",
+      "timezone_aware": true,
+      "interpretation": {
+        "description": "During spring forward, local time jumps (non-existent hour). During autumn back, local time repeats (ambiguous hour).",
+        "python_behavior": "PEP 495 introduced fold attribute (fold=0 for first occurrence, fold=1 for repeated occurrence).",
+        "sql_behavior": "PostgreSQL AT TIME ZONE resolves repeated time to standard time by default."
+      },
+      "ambiguity": {
+        "is_ambiguous": true,
+        "reason": "Times falling in repeated fold hour require explicit disambiguation flag."
+      },
+      "validation_rules": [
+        "Store UTC internally to avoid ambiguity during DST transitions"
+      ],
+      "source_references": ["SRC_IANA_TZDB", "SRC_PYTHON_DOCS"]
+    },
+    {
+      "record_id": "TZ_UTC_OFFSET_RULES",
+      "concept_id": "CONCEPT_TIMESTAMP_INSTANT",
+      "name": "ISO 8601 / RFC 3339 UTC Offset Specification",
+      "timezone_aware": true,
+      "interpretation": {
+        "description": "Offset format [+-]HH:mm or [+-]HHmm or Z. 'Z' is equivalent to +00:00 (Zulu / UTC).",
+        "gotchas": "Offsets represent instantaneous difference from UTC at a single moment; they do not represent geographic zones with seasonal DST rules."
+      },
+      "ambiguity": {
+        "is_ambiguous": false,
+        "reason": "Numeric offset is mathematically unambiguous."
+      },
+      "validation_rules": [
+        "Offset minutes must be 00 to 59",
+        "Offset hours must be -12 to +14"
+      ],
+      "source_references": ["SRC_RFC_3339"]
+    }
+  ]
+}

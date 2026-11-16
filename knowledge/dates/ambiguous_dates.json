@@ -1,0 +1,61 @@
+{
+  "dataset_id": "AMBIGUOUS_DATES_001",
+  "version": "1.0.0",
+  "records": [
+    {
+      "record_id": "AMB_TWO_DIGIT_YEAR_PIVOT",
+      "concept_id": "AMBIGUITY_RESOLUTION",
+      "name": "Two-Digit Year Century Cutoff Pivot Policies",
+      "interpretation": {
+        "description": "Two-digit years (yy) must be mapped to four-digit century (yyyy). Different platforms have conflicting pivot windows.",
+        "sas_policy": "SAS default system option YEARCUTOFF specifies first year of 100-year span (typically YEARCUTOFF=1920 or 1926). With YEARCUTOFF=1920, 20 is 1920, 24 is 2024, 19 is 2019.",
+        "python_policy": "Python strptime %y maps 69-99 to 1969-1999, and 00-68 to 2000-2068 (POSIX standard).",
+        "sql_policy": "PostgreSQL YY format uses 2000-2099; RR format uses current year +/- 50 years."
+      },
+      "ambiguity": {
+        "is_ambiguous": true,
+        "reason": "Conflicting century pivot between SAS YEARCUTOFF and Python %y produces silent 100-year errors for years around pivot boundary."
+      },
+      "validation_rules": [
+        "Explicitly pass century pivot formula during migration instead of relying on runtime defaults"
+      ],
+      "source_references": ["SRC_SAS_DOCS", "SRC_PYTHON_DOCS"]
+    },
+    {
+      "record_id": "AMB_ORDER_DAY_MONTH_NUMERIC",
+      "concept_id": "AMBIGUITY_RESOLUTION",
+      "name": "Numeric Month/Day Permutation (01/02/2024)",
+      "example": "01/02/2024",
+      "interpretation": {
+        "description": "In US locale (en-US), '01/02/2024' represents January 2, 2024. In UK/Europe/International (en-GB), it represents February 1, 2024.",
+        "resolution_policy": "If both leading components are <= 12 and separated by '/' or '-', date is strictly ambiguous without external locale metadata."
+      },
+      "ambiguity": {
+        "is_ambiguous": true,
+        "reason": "Indistinguishable without locale or schema format specifier."
+      },
+      "validation_rules": [
+        "Flag as UNCERTAIN unless format informat (e.g. MMDDYY vs DDMMYY) is explicitly declared in source"
+      ],
+      "source_references": ["SRC_UNICODE_CLDR"]
+    },
+    {
+      "record_id": "AMB_UNSEPARATED_SIX_DIGIT",
+      "concept_id": "AMBIGUITY_RESOLUTION",
+      "name": "Unseparated Six-Digit String (010224)",
+      "example": "010224",
+      "interpretation": {
+        "description": "Can be interpreted as DDMMYY (01 Feb 2024), MMDDYY (02 Jan 2024), or YYMMDD (24 Feb 2001).",
+        "resolution_policy": "Requires source informat mapping (e.g., SAS informat DDMMYY6. vs MMDDYY6. vs YYMMDD6.)."
+      },
+      "ambiguity": {
+        "is_ambiguous": true,
+        "reason": "Three possible interpretations with conflicting day, month, and year assignments."
+      },
+      "validation_rules": [
+        "Never guess interpretation without source informat reference"
+      ],
+      "source_references": ["SRC_SAS_DOCS"]
+    }
+  ]
+}

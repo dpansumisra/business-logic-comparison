@@ -1,0 +1,29 @@
+{
+  "dataset_id": "LANG_SAS_DATES_001",
+  "name": "SAS Language Date, Time, and Interval Semantics",
+  "description": "Comprehensive specification of SAS date/time storage, INTCK, INTNX, formats, informats, and datetime arithmetic.",
+  "category": "languages",
+  "subcategory": "sas_dates",
+  "version": "1.0.0",
+  "status": "active",
+  "content_path": "knowledge/languages/sas/date_semantics.json",
+  "record_count": 3,
+  "supported_languages": ["SAS"],
+  "supported_formats": ["DATE9", "DATETIME20", "MMDDYY10", "E8601DA"],
+  "tags": ["sas", "intnx", "intck", "date9", "sas_epoch", "intervals"],
+  "concepts": ["DATE_ARITHMETIC", "DATE_CONVERSION", "DATE_INTERVAL"],
+  "when_to_retrieve": [
+    "When translating SAS date arithmetic (date + 30) or interval functions (INTCK, INTNX) to Python or SQL"
+  ],
+  "when_not_to_retrieve": [
+    "When SAS DATA step contains no date or datetime operations"
+  ],
+  "retrieval_guidance": "SAS dates are integers representing days since Jan 1, 1960. SAS INTNX('MONTH', date, 1, 'BEGINNING') computes the first day of the next month.",
+  "source_type": "language_spec",
+  "sources": ["SRC_SAS_DOCS"],
+  "date_created": "2026-11-16",
+  "date_update": "2026-11-16",
+  "date_current": null,
+  "license": "See individual source records",
+  "schema_ref": "schemas/date.schema.json"
+}

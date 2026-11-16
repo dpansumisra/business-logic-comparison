@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://universal-data-knowledge.org/schemas/string.schema.json",
+  "title": "StringAndEncodingSchema",
+  "type": "object",
+  "required": ["dataset_id", "version", "records"],
+  "properties": {
+    "dataset_id": { "type": "string" },
+    "version": { "type": "string" },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["record_id", "concept_id", "name"],
+        "properties": {
+          "record_id": { "type": "string" },
+          "concept_id": { "type": "string" },
+          "name": { "type": "string" },
+          "encoding_standard": { "type": "string" },
+          "code_unit_size": { "type": "string" },
+          "unicode_normalization_form": { "type": "string" },
+          "case_folding_rules": { "type": "string" },
+          "indexing_semantics": { "type": "string" },
+          "risks": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "migration_notes": { "type": "string" },
+          "source_references": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

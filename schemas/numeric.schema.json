@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://universal-data-knowledge.org/schemas/numeric.schema.json",
+  "title": "NumericKnowledgeSchema",
+  "type": "object",
+  "required": ["dataset_id", "version", "records"],
+  "properties": {
+    "dataset_id": { "type": "string" },
+    "version": { "type": "string" },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["record_id", "concept_id", "name"],
+        "properties": {
+          "record_id": { "type": "string" },
+          "concept_id": { "type": "string" },
+          "name": { "type": "string" },
+          "category_type": { "type": "string" },
+          "bit_width": { "type": ["integer", "null"] },
+          "signed": { "type": ["boolean", "null"] },
+          "range": {
+            "type": "object",
+            "properties": {
+              "min": { "type": ["number", "string", "null"] },
+              "max": { "type": ["number", "string", "null"] }
+            }
+          },
+          "precision_digits": { "type": ["integer", "string", "null"] },
+          "ieee_754_standard": { "type": ["string", "null"] },
+          "rounding_behavior": { "type": "string" },
+          "overflow_behavior": { "type": "string" },
+          "division_by_zero_behavior": { "type": "string" },
+          "language_mappings": { "type": "object" },
+          "risks": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "validation_rules": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "source_references": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "dataset_id": "LANG_NULL_SEMANTICS_001",
+  "version": "1.0.0",
+  "records": [
+    {
+      "record_id": "SEM_NULL_SAS_COMPARE",
+      "concept_id": "NULL_COMPARISON",
+      "name": "SAS Missing Value Conditional Comparison Rules",
+      "language": "SAS",
+      "representation": "Numeric . or Character ' '",
+      "equality_behavior": "Evaluates to numeric value smaller than all numbers",
+      "truthiness": "Falsy (0 and missing values evaluate to False; non-zero numeric is True)",
+      "ordering_behavior": "Lowest possible value in ASC sort",
+      "aggregation_behavior": "Excluded from statistical procedures",
+      "silent_gotchas": [
+        "In SAS: `if x < 10 then` branches execute for missing values!",
+        "In SAS: `if x > . then` is the standard idiom to check for valid non-missing numbers"
+      ],
+      "migration_preservation_rules": [
+        "Replace SAS `if x < 10` with Python `if x is not None and x < 10`"
+      ],
+      "source_references": ["SRC_SAS_DOCS"]
+    },
+    {
+      "record_id": "SEM_NULL_SQL_COMPARE",
+      "concept_id": "NULL_COMPARISON",
+      "name": "SQL Three-Valued Logic Evaluation Rules",
+      "language": "SQL",
+      "representation": "NULL",
+      "equality_behavior": "NULL = NULL is UNKNOWN; NULL <> NULL is UNKNOWN",
+      "truthiness": "UNKNOWN is treated as false in WHERE, HAVING, and CHECK constraints (except inverse checks)",
+      "ordering_behavior": "NULLS LAST in Postgres ASC, NULLS FIRST in Oracle ASC",
+      "aggregation_behavior": "Ignored by aggregate functions",
+      "silent_gotchas": [
+        "SELECT * WHERE x = NULL returns 0 rows; must use IS NULL",
+        "CASE WHEN NULL THEN 'a' ELSE 'b' END executes the ELSE branch"
+      ],
+      "migration_preservation_rules": [
+        "In Python expressions, translate `IS NULL` to `x is None` and `IS NOT NULL` to `x is not None`"
+      ],
+      "source_references": ["SRC_POSTGRES_DOCS"]
+    },
+    {
+      "record_id": "SEM_NULL_PYTHON_COMPARE",
+      "concept_id": "NULL_COMPARISON",
+      "name": "Python None Comparison and Truthiness Rules",
+      "language": "Python",
+      "representation": "None",
+      "equality_behavior": "None == None is True; None != None is False",
+      "truthiness": "bool(None) is False",
+      "ordering_behavior": "TypeError on relational comparisons (<, <=, >, >=)",
+      "aggregation_behavior": "TypeError when passed to sum()",
+      "silent_gotchas": [
+        "`x == None` is discouraged by PEP 8; should use `x is None`"
+      ],
+      "migration_preservation_rules": [
+        "Guard against TypeError when migrating relational comparisons on nullable fields"
+      ],
+      "source_references": ["SRC_PYTHON_DOCS"]
+    },
+    {
+      "record_id": "SEM_NULL_JAVASCRIPT_COMPARE",
+      "concept_id": "NULL_COMPARISON",
+      "name": "JavaScript null and undefined Comparison Rules",
+      "language": "JavaScript",
+      "representation": "null, undefined",
+      "equality_behavior": "null == undefined (true); null === undefined (false); null == 0 (false); undefined == 0 (false)",
+      "truthiness": "Both falsy",
+      "ordering_behavior": "null converts to 0; undefined converts to NaN",
+      "aggregation_behavior": "Skipped or coerced depending on operation",
+      "silent_gotchas": [
+        "Number(null) === 0, but Number(undefined) === NaN"
+      ],
+      "migration_preservation_rules": [
+        "Use strict equality === or optional chaining (?.)"
+      ],
+      "source_references": ["SRC_ECMA_262"]
+    }
+  ]
+}

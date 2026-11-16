@@ -1,0 +1,184 @@
+{
+  "dataset_id": "DATE_FORMATS_001",
+  "version": "1.0.0",
+  "records": [
+    {
+      "record_id": "FMT_ISO_8601_DATE",
+      "concept_id": "CONCEPT_CALENDAR_DATE",
+      "name": "ISO 8601 Extended Calendar Date",
+      "pattern": "YYYY-MM-DD",
+      "components": [
+        { "component": "year", "position": 1, "length": 4 },
+        { "component": "month", "position": 6, "length": 2 },
+        { "component": "day", "position": 9, "length": 2 }
+      ],
+      "example": "2026-11-16",
+      "interpretation": {
+        "calendar": "proleptic_gregorian",
+        "locale": "universal",
+        "year_digits": 4,
+        "century_policy": "explicit_four_digit"
+      },
+      "ambiguity": {
+        "is_ambiguous": false,
+        "reason": "Unambiguous international standard format (ISO 8601/RFC 3339)."
+      },
+      "canonical_representation": "2026-11-16",
+      "validation_rules": [
+        "Year must be 4 digits",
+        "Month must be 01 to 12",
+        "Day must be valid for month and leap year rules"
+      ],
+      "related_concepts": ["FMT_YYYYMMDD_COMPACT", "FMT_RFC_3339_TIMESTAMP"],
+      "source_references": ["SRC_RFC_3339"]
+    },
+    {
+      "record_id": "FMT_DDMMYY",
+      "concept_id": "CONCEPT_CALENDAR_DATE",
+      "name": "Day Month Year Two-Digit",
+      "pattern": "ddMMyy",
+      "components": [
+        { "component": "day", "position": 1, "length": 2 },
+        { "component": "month", "position": 3, "length": 2 },
+        { "component": "year", "position": 5, "length": 2 }
+      ],
+      "example": "290224",
+      "interpretation": {
+        "calendar": "gregorian",
+        "locale": "en-GB",
+        "year_digits": 2,
+        "century_policy": "requires_explicit_pivot"
+      },
+      "ambiguity": {
+        "is_ambiguous": true,
+        "reason": "Two-digit years require century interpretation pivot; conflicting order with MMDDYY."
+      },
+      "canonical_representation": "2024-02-29",
+      "validation_rules": [
+        "Day must be valid for month and year",
+        "Month must be between 1 and 12",
+        "Century pivot rule (e.g. SAS YEARCUTOFF or Python %y 1969-2068) must be explicitly verified"
+      ],
+      "related_concepts": ["FMT_MMDDYY", "FMT_YYYYMMDD_COMPACT"],
+      "source_references": ["SRC_UNICODE_CLDR"]
+    },
+    {
+      "record_id": "FMT_MMDDYY",
+      "concept_id": "CONCEPT_CALENDAR_DATE",
+      "name": "Month Day Year Two-Digit",
+      "pattern": "MMddyy",
+      "components": [
+        { "component": "month", "position": 1, "length": 2 },
+        { "component": "day", "position": 3, "length": 2 },
+        { "component": "year", "position": 5, "length": 2 }
+      ],
+      "example": "022924",
+      "interpretation": {
+        "calendar": "gregorian",
+        "locale": "en-US",
+        "year_digits": 2,
+        "century_policy": "requires_explicit_pivot"
+      },
+      "ambiguity": {
+        "is_ambiguous": true,
+        "reason": "Confuses with DDMMYY when day <= 12."
+      },
+      "canonical_representation": "2024-02-29",
+      "validation_rules": [
+        "Month must be 1-12",
+        "Day must be 1-31 depending on month"
+      ],
+      "related_concepts": ["FMT_DDMMYY"],
+      "source_references": ["SRC_UNICODE_CLDR"]
+    },
+    {
+      "record_id": "FMT_YYYYMMDD_COMPACT",
+      "concept_id": "CONCEPT_CALENDAR_DATE",
+      "name": "Basic ISO Calendar Date (Compact)",
+      "pattern": "yyyyMMdd",
+      "components": [
+        { "component": "year", "position": 1, "length": 4 },
+        { "component": "month", "position": 5, "length": 2 },
+        { "component": "day", "position": 7, "length": 2 }
+      ],
+      "example": "20261116",
+      "interpretation": {
+        "calendar": "proleptic_gregorian",
+        "locale": "universal",
+        "year_digits": 4,
+        "century_policy": "explicit_four_digit"
+      },
+      "ambiguity": {
+        "is_ambiguous": false,
+        "reason": "Sortable ISO 8601 basic format."
+      },
+      "canonical_representation": "2026-11-16",
+      "validation_rules": [
+        "8-digit numeric string",
+        "Valid year, month, day"
+      ],
+      "related_concepts": ["FMT_ISO_8601_DATE"],
+      "source_references": ["SRC_UNICODE_CLDR"]
+    },
+    {
+      "record_id": "FMT_SAS_DATE9",
+      "concept_id": "CONCEPT_CALENDAR_DATE",
+      "name": "SAS DATE9. Format",
+      "pattern": "ddMMMyyyy",
+      "components": [
+        { "component": "day", "position": 1, "length": 2 },
+        { "component": "month_alpha", "position": 3, "length": 3 },
+        { "component": "year", "position": 6, "length": 4 }
+      ],
+      "example": "16NOV2026",
+      "interpretation": {
+        "calendar": "gregorian",
+        "locale": "en-US",
+        "year_digits": 4,
+        "month_format": "3_letter_uppercase_abbreviation"
+      },
+      "ambiguity": {
+        "is_ambiguous": false,
+        "reason": "Month is expressed as 3 alphabetic letters, eliminating month/day permutation."
+      },
+      "canonical_representation": "2026-11-16",
+      "validation_rules": [
+        "Day: 1-31 (padded or unpadded in SAS DATE7./DATE9.)",
+        "Month: JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC (case-insensitive)",
+        "Year: 4-digit"
+      ],
+      "related_concepts": ["FMT_ISO_8601_DATE"],
+      "source_references": ["SRC_SAS_DOCS"]
+    },
+    {
+      "record_id": "FMT_RFC_3339_TIMESTAMP",
+      "concept_id": "CONCEPT_TIMESTAMP_INSTANT",
+      "name": "RFC 3339 UTC Timestamp",
+      "pattern": "YYYY-MM-DDTHH:mm:ss.sssZ",
+      "components": [
+        { "component": "date", "position": 1, "length": 10 },
+        { "component": "time", "position": 12, "length": 8 },
+        { "component": "fraction", "position": 20, "length": 4 },
+        { "component": "timezone", "position": 24, "length": 1 }
+      ],
+      "example": "2026-11-16T12:00:00.000Z",
+      "interpretation": {
+        "calendar": "proleptic_gregorian",
+        "timezone": "UTC",
+        "precision": "millisecond"
+      },
+      "ambiguity": {
+        "is_ambiguous": false,
+        "reason": "Explicit UTC indicator Z."
+      },
+      "canonical_representation": "2026-11-16T12:00:00.000Z",
+      "validation_rules": [
+        "Valid ISO date part",
+        "Time part HH 00-23, mm 00-59, ss 00-60 (leap seconds permitted)",
+        "Offset either Z or +/-HH:mm"
+      ],
+      "related_concepts": ["FMT_ISO_8601_DATE"],
+      "source_references": ["SRC_RFC_3339"]
+    }
+  ]
+}

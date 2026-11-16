@@ -1,0 +1,103 @@
+{
+  "dataset_id": "EPOCH_SERIAL_DATES_001",
+  "version": "1.0.0",
+  "records": [
+    {
+      "record_id": "EPOCH_SAS_DATE",
+      "concept_id": "CONCEPT_CALENDAR_DATE",
+      "name": "SAS Date Value (Days since 1960-01-01)",
+      "epoch": "1960-01-01",
+      "unit": "days",
+      "precision": "day",
+      "example": 24427,
+      "interpretation": {
+        "description": "Number of days before or after January 1, 1960. 0 corresponds to 1960-01-01. Negative numbers represent dates prior to 1960.",
+        "storage_type": "64-bit float",
+        "missing_value_representation": "Represented by SAS numeric missing values (. or .A-.Z), which evaluate as less than all valid numbers."
+      },
+      "ambiguity": {
+        "is_ambiguous": false,
+        "reason": "Standard SAS date convention. Ambiguity arises only if mistaken for SAS datetime (which uses seconds) or Unix epoch."
+      },
+      "canonical_representation": "2026-11-16",
+      "validation_rules": [
+        "Integer day value (fractional parts are truncated by SAS date formats)",
+        "Must verify value is not a SAS missing value before arithmetic"
+      ],
+      "related_concepts": ["EPOCH_SAS_DATETIME", "EPOCH_UNIX_SECONDS"],
+      "source_references": ["SRC_SAS_DOCS"]
+    },
+    {
+      "record_id": "EPOCH_SAS_DATETIME",
+      "concept_id": "CONCEPT_TIMESTAMP_INSTANT",
+      "name": "SAS Datetime Value (Seconds since 1960-01-01 00:00:00)",
+      "epoch": "1960-01-01T00:00:00",
+      "unit": "seconds",
+      "precision": "second / microsecond",
+      "example": 2110507200,
+      "interpretation": {
+        "description": "Number of seconds since midnight on January 1, 1960. One day equals 86,400 seconds.",
+        "storage_type": "64-bit float",
+        "conversion_to_sas_date": "DATEPART(sas_datetime) extracts day count; multiplying sas_date by 86400 produces sas_datetime at midnight."
+      },
+      "ambiguity": {
+        "is_ambiguous": false,
+        "reason": "SAS datetime standard."
+      },
+      "canonical_representation": "2026-11-16T12:00:00",
+      "validation_rules": [
+        "Numeric value representing seconds",
+        "Do NOT add integer days directly: adding 1 increments by 1 second, not 1 day"
+      ],
+      "related_concepts": ["EPOCH_SAS_DATE", "EPOCH_UNIX_SECONDS"],
+      "source_references": ["SRC_SAS_DOCS"]
+    },
+    {
+      "record_id": "EPOCH_UNIX_SECONDS",
+      "concept_id": "CONCEPT_TIMESTAMP_INSTANT",
+      "name": "POSIX / Unix Timestamp (Seconds since 1970-01-01 00:00:00 UTC)",
+      "epoch": "1970-01-01T00:00:00Z",
+      "unit": "seconds",
+      "precision": "second",
+      "example": 1794830400,
+      "interpretation": {
+        "description": "Standard POSIX epoch timestamp. Offset between Unix Epoch (1970-01-01) and SAS Epoch (1960-01-01) is exactly 315,619,200 seconds (3653 days).",
+        "storage_type": "32-bit/64-bit integer or float"
+      },
+      "ambiguity": {
+        "is_ambiguous": false,
+        "reason": "Universal Unix timestamp convention."
+      },
+      "canonical_representation": "2026-11-16T12:00:00Z",
+      "validation_rules": [
+        "315619200 seconds offset between SAS and Unix epoch (or 3653 days)"
+      ],
+      "related_concepts": ["EPOCH_SAS_DATETIME", "FMT_RFC_3339_TIMESTAMP"],
+      "source_references": ["SRC_PYTHON_DOCS"]
+    },
+    {
+      "record_id": "EPOCH_EXCEL_SERIAL",
+      "concept_id": "CONCEPT_CALENDAR_DATE",
+      "name": "Excel Serial Date (1900 Date System)",
+      "epoch": "1899-12-30",
+      "unit": "days",
+      "precision": "day with fractional day time",
+      "example": 46342.5,
+      "interpretation": {
+        "description": "Days since 1900-01-01, but Excel incorrectly treats 1900 as a leap year (Lotus 1-2-3 compatibility bug). Effective epoch for post-1900-02-28 dates is 1899-12-30.",
+        "storage_type": "64-bit float"
+      },
+      "ambiguity": {
+        "is_ambiguous": true,
+        "reason": "1900 leap year bug causes off-by-one error for dates prior to March 1, 1900."
+      },
+      "canonical_representation": "2026-11-16T12:00:00",
+      "validation_rules": [
+        "Subtract 1 day if converting pre-1900-03-01 date in 1900 date system",
+        "Fractional part represents time: 0.5 = 12:00:00 PM"
+      ],
+      "related_concepts": ["EPOCH_SAS_DATE"],
+      "source_references": ["SRC_UNICODE_CLDR"]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "dataset_id": "LANG_SAS_MISSING_001",
+  "name": "SAS Missing Value Mechanics and Special Missings",
+  "description": "Rules for SAS standard missing (.), special missings (.A through .Z), character blanks, and sorting behavior.",
+  "category": "languages",
+  "subcategory": "sas_missing",
+  "version": "1.0.0",
+  "status": "active",
+  "content_path": "knowledge/languages/sas/missing_value_semantics.json",
+  "record_count": 2,
+  "supported_languages": ["SAS"],
+  "supported_formats": ["sas_special_missing"],
+  "tags": ["sas", "missing", "special_missing", "ordering"],
+  "concepts": ["CONCEPT_SAS_MISSING", "MISSING_VALUE_COMPARISON"],
+  "when_to_retrieve": [
+    "When migrating SAS conditional logic containing comparisons with missing values or negative numbers"
+  ],
+  "when_not_to_retrieve": [
+    "When SAS variables are proven strictly positive non-missing"
+  ],
+  "retrieval_guidance": "In SAS: `if var < 0` is true if var is missing! In Python: `var < 0` raises TypeError if var is None.",
+  "source_type": "language_spec",
+  "sources": ["SRC_SAS_DOCS"],
+  "date_created": "2026-11-16",
+  "date_update": "2026-11-16",
+  "date_current": null,
+  "license": "See individual source records",
+  "schema_ref": "schemas/null.schema.json"
+}

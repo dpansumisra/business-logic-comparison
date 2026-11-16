@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://universal-data-knowledge.org/schemas/descriptor.schema.json",
+  "title": "DatasetMetadataDescriptor",
+  "type": "object",
+  "required": [
+    "dataset_id",
+    "name",
+    "description",
+    "category",
+    "subcategory",
+    "version",
+    "status",
+    "content_path",
+    "record_count",
+    "supported_languages",
+    "tags",
+    "concepts",
+    "when_to_retrieve",
+    "retrieval_guidance",
+    "source_type",
+    "sources",
+    "date_created",
+    "date_update",
+    "schema_ref"
+  ],
+  "properties": {
+    "dataset_id": {
+      "type": "string",
+      "pattern": "^[A-Z0-9_]{3,64}$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 3
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10
+    },
+    "category": {
+      "type": "string"
+    },
+    "subcategory": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "deprecated", "draft"]
+    },
+    "content_path": {
+      "type": "string"
+    },
+    "record_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "supported_languages": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "supported_formats": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "concepts": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "when_to_retrieve": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "when_not_to_retrieve": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "retrieval_guidance": {
+      "type": "string"
+    },
+    "source_type": {
+      "type": "string",
+      "enum": ["official_standard", "language_spec", "curated", "combined"]
+    },
+    "sources": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "date_created": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "date_update": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "date_current": {
+      "type": ["string", "null"]
+    },
+    "license": {
+      "type": "string"
+    },
+    "schema_ref": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

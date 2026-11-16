@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://universal-data-knowledge.org/schemas/mapping.schema.json",
+  "title": "CrossLanguageMappingSchema",
+  "type": "object",
+  "required": ["dataset_id", "version", "records"],
+  "properties": {
+    "dataset_id": { "type": "string" },
+    "version": { "type": "string" },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "mapping_id",
+          "concept_id",
+          "source",
+          "target",
+          "compatibility",
+          "conversion",
+          "semantic_differences",
+          "edge_cases",
+          "preservation_rules",
+          "confidence"
+        ],
+        "properties": {
+          "mapping_id": { "type": "string", "pattern": "^[A-Z0-9_]{3,64}$" },
+          "concept_id": { "type": "string" },
+          "source": {
+            "type": "object",
+            "required": ["language", "representation"],
+            "properties": {
+              "language": { "type": "string" },
+              "representation": { "type": "string" },
+              "epoch": { "type": ["string", "null"] },
+              "unit": { "type": ["string", "null"] },
+              "type": { "type": ["string", "null"] }
+            }
+          },
+          "target": {
+            "type": "object",
+            "required": ["language", "representation"],
+            "properties": {
+              "language": { "type": "string" },
+              "representation": { "type": "string" },
+              "epoch": { "type": ["string", "null"] },
+              "unit": { "type": ["string", "null"] },
+              "type": { "type": ["string", "null"] }
+            }
+          },
+          "compatibility": {
+            "type": "string",
+            "enum": [
+              "EQUIVALENT",
+              "CONDITIONALLY_EQUIVALENT",
+              "CONVERTIBLE",
+              "INCOMPATIBLE",
+              "UNCERTAIN"
+            ]
+          },
+          "conversion": {
+            "type": "object",
+            "required": ["strategy", "formula_description"],
+            "properties": {
+              "strategy": { "type": "string" },
+              "formula_description": { "type": "string" },
+              "code_example": { "type": "string" },
+              "target_library": { "type": "string" }
+            }
+          },
+          "semantic_differences": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["difference", "risk"],
+              "properties": {
+                "difference": { "type": "string" },
+                "risk": { "type": "string" },
+                "severity": { "type": "string", "enum": ["high", "medium", "low", "critical"] }
+              }
+            }
+          },
+          "edge_cases": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "preservation_rules": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "related_knowledge": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "confidence": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "verified"]
+          },
+          "evidence_sources": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

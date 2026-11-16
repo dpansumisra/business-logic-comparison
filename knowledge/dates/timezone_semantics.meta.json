@@ -1,0 +1,42 @@
+{
+  "dataset_id": "TIMEZONE_SEMANTICS_001",
+  "name": "Timezone and Daylight Saving Semantics",
+  "description": "Rules for UTC offsets, naive vs aware datetimes, daylight saving transitions, and timezone conversion hazards.",
+  "category": "dates",
+  "subcategory": "timezones",
+  "version": "1.0.0",
+  "status": "active",
+  "content_path": "knowledge/dates/timezone_semantics.json",
+  "record_count": 3,
+  "supported_languages": [
+    "SAS",
+    "Python",
+    "SQL",
+    "JavaScript",
+    "Java"
+  ],
+  "supported_formats": ["tz_database_iana", "iso_8601_offset"],
+  "tags": ["timezone", "dst", "utc", "naive", "aware", "iana"],
+  "concepts": [
+    "CONCEPT_TIMESTAMP_INSTANT",
+    "TIMEZONE_CONVERSION"
+  ],
+  "when_to_retrieve": [
+    "When migrating timestamps between timezone-naive and timezone-aware targets",
+    "When comparing dates across differing offsets or daylight saving boundaries"
+  ],
+  "when_not_to_retrieve": [
+    "When dealing strictly with calendar date without time component"
+  ],
+  "retrieval_guidance": "Python datetime.datetime is naive by default. Comparing naive and aware datetimes raises TypeError in Python.",
+  "source_type": "official_standard",
+  "sources": [
+    "SRC_IANA_TZDB",
+    "SRC_PYTHON_DOCS"
+  ],
+  "date_created": "2026-11-16",
+  "date_update": "2026-11-16",
+  "date_current": null,
+  "license": "See individual source records",
+  "schema_ref": "schemas/date.schema.json"
+}

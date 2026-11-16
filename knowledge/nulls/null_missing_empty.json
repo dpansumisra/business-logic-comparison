@@ -1,0 +1,116 @@
+{
+  "dataset_id": "NULL_MISSING_EMPTY_001",
+  "version": "1.0.0",
+  "records": [
+    {
+      "record_id": "NULL_SQL",
+      "concept_id": "CONCEPT_SQL_NULL",
+      "name": "SQL Relational NULL",
+      "language": "SQL",
+      "representation": "NULL",
+      "data_type_context": "Any nullable database column",
+      "equality_behavior": "Unknown (NULL = NULL yields UNKNOWN; NULL <> NULL yields UNKNOWN)",
+      "truthiness": "Evaluates to UNKNOWN in WHERE clauses, effectively filtering rows out unless IS NULL is used",
+      "ordering_behavior": "Dialect dependent (PostgreSQL: NULLS LAST by default in ASC; Oracle: NULLS FIRST in ASC; MySQL: NULLS FIRST in ASC)",
+      "aggregation_behavior": "Ignored by COUNT(column), SUM, AVG; included by COUNT(*)",
+      "serialization_behavior": "Serializes to null in JSON",
+      "sentinel_values": ["NULL"],
+      "silent_gotchas": [
+        "WHERE col NOT IN (1, 2, NULL) always returns empty set because col <> NULL is UNKNOWN",
+        "Adding NULL to any number yields NULL (col + 10 == NULL)"
+      ],
+      "migration_preservation_rules": [
+        "In Python, IS NULL must become `is None` or `pd.isna()`",
+        "In Python, NOT IN with None in collection behaves differently than SQL"
+      ],
+      "source_references": ["SRC_POSTGRES_DOCS"]
+    },
+    {
+      "record_id": "NULL_SAS_NUMERIC_MISSING",
+      "concept_id": "CONCEPT_SAS_MISSING",
+      "name": "SAS Numeric Missing Values (. and .A through .Z)",
+      "language": "SAS",
+      "representation": ". or .A - .Z or ._",
+      "data_type_context": "SAS numeric variables",
+      "equality_behavior": "Numeric equality: . == . is TRUE; .A == .A is TRUE; . < .A < .B ... < .Z",
+      "truthiness": "In SAS: 'IF missing_var THEN' evaluates to FALSE (0 and missing values are false; non-zero numbers are true)",
+      "ordering_behavior": "Missing values sort before all negative numbers: ._ < . < .A < .B < ... < .Z < -999999 < 0 < +999999",
+      "aggregation_behavior": "Ignored by SUM(), MEAN(); arithmetic operator (+, -) with missing value propagates missing value",
+      "serialization_behavior": "Often exported as empty string or '.' in CSV/text",
+      "sentinel_values": [".", "._", ".A", ".B", ".C", ".D", ".E", ".F", ".G", ".H", ".I", ".J", ".K", ".L", ".M", ".N", ".O", ".P", ".Q", ".R", ".S", ".T", ".U", ".V", ".W", ".X", ".Y", ".Z"],
+      "silent_gotchas": [
+        "Critical SAS gotcha: 'IF age < 21 THEN' is TRUE when age is missing! Because . is less than 21.",
+        "In Python, if age is None: `None < 21` raises TypeError in Python 3."
+      ],
+      "migration_preservation_rules": [
+        "Transform SAS `IF var < X` to Python `if var is not None and var < X` to avoid semantic discrepancy or runtime crash",
+        "Map SAS special missings (.A-.Z) to categorical metadata or structured Nullable if code differentiates survey missings"
+      ],
+      "source_references": ["SRC_SAS_DOCS"]
+    },
+    {
+      "record_id": "NULL_PYTHON_NONE",
+      "concept_id": "CONCEPT_PYTHON_NONE",
+      "name": "Python None Singleton",
+      "language": "Python",
+      "representation": "None",
+      "data_type_context": "NoneType singleton",
+      "equality_behavior": "None == None is True; None == 0 is False; None == '' is False",
+      "truthiness": "Falsy (bool(None) is False)",
+      "ordering_behavior": "Unorderable with numbers or strings in Python 3; raises TypeError on < or >",
+      "aggregation_behavior": "None in numeric lists causes TypeError in sum(); handled gracefully by pandas as NaN/None",
+      "serialization_behavior": "Serializes to JSON null",
+      "sentinel_values": ["None"],
+      "silent_gotchas": [
+        "Checking `if x:` treats 0, False, empty list [], and None identically. Use `if x is not None:` when 0 or empty string is valid"
+      ],
+      "migration_preservation_rules": [
+        "Always use identity comparison `is None` or `is not None` rather than `== None`"
+      ],
+      "source_references": ["SRC_PYTHON_DOCS"]
+    },
+    {
+      "record_id": "NULL_JAVASCRIPT_UNDEFINED_VS_NULL",
+      "concept_id": "CONCEPT_JS_NULL_UNDEFINED",
+      "name": "JavaScript null vs undefined",
+      "language": "JavaScript",
+      "representation": "null and undefined",
+      "data_type_context": "null (object type / primitive value), undefined (undefined primitive type)",
+      "equality_behavior": "null == undefined is true; null === undefined is false; null == 0 is false",
+      "truthiness": "Both falsy (Boolean(null) is false, Boolean(undefined) is false)",
+      "ordering_behavior": "Number(null) is 0 (null >= 0 is true, null == 0 is false); Number(undefined) is NaN (undefined >= 0 is false)",
+      "aggregation_behavior": "Array methods handle or skip depending on method",
+      "serialization_behavior": "JSON.stringify() converts null to 'null', but omits keys whose value is undefined",
+      "sentinel_values": ["null", "undefined"],
+      "silent_gotchas": [
+        "JSON.stringify({ a: undefined }) produces '{}'; JSON.stringify({ a: null }) produces '{\"a\":null}'",
+        "typeof null === 'object' (historic bug in JavaScript specification)"
+      ],
+      "migration_preservation_rules": [
+        "When migrating JS to Python, distinguish between missing key (undefined) and explicit None (null)"
+      ],
+      "source_references": ["SRC_ECMA_262"]
+    },
+    {
+      "record_id": "NULL_EMPTY_STRING_VS_NULL",
+      "concept_id": "CONCEPT_EMPTY_STRING",
+      "name": "Empty String ('') vs NULL / None",
+      "language": "Universal",
+      "representation": "'' (length 0 string)",
+      "data_type_context": "Character / String type",
+      "equality_behavior": "'' == '' is true. In Oracle SQL: empty string '' is treated as NULL! In PostgreSQL/MySQL/Python: '' is not NULL.",
+      "truthiness": "Falsy in Python and JavaScript; truthy in some dialects unless explicitly cast",
+      "ordering_behavior": "Sorts before characters in ASCII/Unicode collation",
+      "aggregation_behavior": "Counted by COUNT(col) because it is non-null in ANSI SQL",
+      "serialization_behavior": "Serializes to '\"\"'",
+      "sentinel_values": ["\"\""],
+      "silent_gotchas": [
+        "Oracle SQL treats empty strings as NULL: LENGTH('') IS NULL in Oracle! In Python: len('') == 0."
+      ],
+      "migration_preservation_rules": [
+        "Check database dialect: if Oracle migration, empty strings must be normalized or null-checked"
+      ],
+      "source_references": ["SRC_POSTGRES_DOCS", "SRC_PYTHON_DOCS"]
+    }
+  ]
+}

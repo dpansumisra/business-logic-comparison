@@ -1,0 +1,237 @@
+{
+  "registry_version": "1.0.0",
+  "last_updated": "2026-11-16",
+  "categories": [
+    {
+      "category_id": "DATES",
+      "name": "Date and Time",
+      "descriptor_path": "knowledge/dates/date_formats.meta.json",
+      "content_path": "knowledge/dates/date_formats.json",
+      "tags": ["date", "datetime", "timestamp", "calendar", "epoch", "timezone"]
+    },
+    {
+      "category_id": "NUMBERS",
+      "name": "Numeric Representations",
+      "descriptor_path": "knowledge/numbers/numeric_types.meta.json",
+      "content_path": "knowledge/numbers/numeric_types.json",
+      "tags": ["numeric", "integer", "float", "precision", "rounding", "overflow"]
+    },
+    {
+      "category_id": "NULLS",
+      "name": "Null and Missing Values",
+      "descriptor_path": "knowledge/nulls/null_missing_empty.meta.json",
+      "content_path": "knowledge/nulls/null_missing_empty.json",
+      "tags": ["null", "none", "undefined", "missing", "nan"]
+    },
+    {
+      "category_id": "STRINGS",
+      "name": "Strings and Encodings",
+      "descriptor_path": "knowledge/strings/encoding_semantics.meta.json",
+      "content_path": "knowledge/strings/encoding_semantics.json",
+      "tags": ["string", "unicode", "utf8", "collation"]
+    },
+    {
+      "category_id": "LANGUAGES",
+      "name": "Language Semantics",
+      "descriptor_path": "knowledge/languages/sas/date_semantics.meta.json",
+      "content_path": "knowledge/languages/sas/date_semantics.json",
+      "tags": ["sas", "sql", "python", "javascript"]
+    },
+    {
+      "category_id": "CROSS_LANGUAGE_MAPPINGS",
+      "name": "Cross-Language Compatibility Graph",
+      "descriptor_path": "knowledge/cross_language_mappings/date_mappings.meta.json",
+      "content_path": "knowledge/cross_language_mappings/date_mappings.json",
+      "tags": ["mappings", "cross_language", "conversion", "compatibility_graph"]
+    }
+  ],
+  "datasets": [
+    {
+      "dataset_id": "DATE_FORMATS_001",
+      "name": "Universal Date Format Reference",
+      "category": "dates",
+      "subcategory": "date_formats",
+      "descriptor_path": "knowledge/dates/date_formats.meta.json",
+      "content_path": "knowledge/dates/date_formats.json",
+      "status": "active",
+      "version": "1.0.0",
+      "tags": ["date", "date-format", "date-parsing", "iso8601"]
+    },
+    {
+      "dataset_id": "EPOCH_SERIAL_DATES_001",
+      "name": "System Epochs and Serial Date Formats",
+      "category": "dates",
+      "subcategory": "epochs",
+      "descriptor_path": "knowledge/dates/epoch_serial_dates.meta.json",
+      "content_path": "knowledge/dates/epoch_serial_dates.json",
+      "status": "active",
+      "version": "1.0.0",
+      "tags": ["epoch", "serial_date", "sas_date", "unix_timestamp", "excel_serial"]
+    },
+    {
+      "dataset_id": "TIMEZONE_SEMANTICS_001",
+      "name": "Timezone and Daylight Saving Semantics",
+      "category": "dates",
+      "subcategory": "timezones",
+      "descriptor_path": "knowledge/dates/timezone_semantics.meta.json",
+      "content_path": "knowledge/dates/timezone_semantics.json",
+      "status": "active",
+      "version": "1.0.0",
+      "tags": ["timezone", "dst", "utc", "naive", "aware"]
+    },
+    {
+      "dataset_id": "AMBIGUOUS_DATES_001",
+      "name": "Ambiguous Date Patterns and Disambiguation Policies",
+      "category": "dates",
+      "subcategory": "ambiguity",
+      "descriptor_path": "knowledge/dates/ambiguous_dates.meta.json",
+      "content_path": "knowledge/dates/ambiguous_dates.json",
+      "status": "active",
+      "version": "1.0.0",
+      "tags": ["ambiguity", "yearcutoff", "pivot", "two_digit_year"]
+    },
+    {
+      "dataset_id": "NUMERIC_TYPES_001",
+      "name": "Universal Numeric Types and Representations",
+      "category": "numbers",
+      "subcategory": "types",
+      "descriptor_path": "knowledge/numbers/numeric_types.meta.json",
+      "content_path": "knowledge/numbers/numeric_types.json",
+      "status": "active",
+      "version": "1.0.0",
+      "tags": ["numeric", "integer", "float", "ieee754", "decimal"]
+    },
+    {
+      "dataset_id": "OVERFLOW_SEMANTICS_001",
+      "name": "Integer Division and Overflow Semantics",
+      "category": "numbers",
+      "subcategory": "overflow_division",
+      "descriptor_path": "knowledge/numbers/overflow_semantics.meta.json",
+      "content_path": "knowledge/numbers/overflow_semantics.json",
+      "status": "active",
+      "version": "1.0.0",
+      "tags": ["integer_division", "floor_division", "modulo", "overflow"]
+    },
+    {
+      "dataset_id": "PRECISION_ROUNDING_001",
+      "name": "Precision and Rounding Semantics",
+      "category": "numbers",
+      "subcategory": "rounding",
+      "descriptor_path": "knowledge/numbers/precision_rounding.meta.json",
+      "content_path": "knowledge/numbers/precision_rounding.json",
+      "status": "active",
+      "version": "1.0.0",
+      "tags": ["rounding", "bankers_rounding", "round_half_even", "round_half_up"]
+    },
+    {
+      "dataset_id": "NULL_MISSING_EMPTY_001",
+      "name": "Null, Missing, and Empty Value Concepts",
+      "category": "nulls",
+      "subcategory": "concepts",
+      "descriptor_path": "knowledge/nulls/null_missing_empty.meta.json",
+      "content_path": "knowledge/nulls/null_missing_empty.json",
+      "status": "active",
+      "version": "1.0.0",
+      "tags": ["null", "missing", "none", "undefined", "sas_missing"]
+    },
+    {
+      "dataset_id": "LANG_NULL_SEMANTICS_001",
+      "name": "Language-Specific Null and Missing Comparison Semantics",
+      "category": "nulls",
+      "subcategory": "language_null",
+      "descriptor_path": "knowledge/nulls/language_null_semantics.meta.json",
+      "content_path": "knowledge/nulls/language_null_semantics.json",
+      "status": "active",
+      "version": "1.0.0",
+      "tags": ["null", "comparison", "truthiness", "ordering"]
+    },
+    {
+      "dataset_id": "STRING_ENCODING_001",
+      "name": "String Encoding, Normalization, and Collation Semantics",
+      "category": "strings",
+      "subcategory": "encoding",
+      "descriptor_path": "knowledge/strings/encoding_semantics.meta.json",
+      "content_path": "knowledge/strings/encoding_semantics.json",
+      "status": "active",
+      "version": "1.0.0",
+      "tags": ["string", "unicode", "utf8", "utf16", "indexing"]
+    },
+    {
+      "dataset_id": "LANG_SAS_DATES_001",
+      "name": "SAS Language Date, Time, and Interval Semantics",
+      "category": "languages",
+      "subcategory": "sas_dates",
+      "descriptor_path": "knowledge/languages/sas/date_semantics.meta.json",
+      "content_path": "knowledge/languages/sas/date_semantics.json",
+      "status": "active",
+      "version": "1.0.0",
+      "tags": ["sas", "intnx", "intck", "date9", "sas_epoch"]
+    },
+    {
+      "dataset_id": "LANG_SAS_MISSING_001",
+      "name": "SAS Missing Value Mechanics and Special Missings",
+      "category": "languages",
+      "subcategory": "sas_missing",
+      "descriptor_path": "knowledge/languages/sas/missing_value_semantics.meta.json",
+      "content_path": "knowledge/languages/sas/missing_value_semantics.json",
+      "status": "active",
+      "version": "1.0.0",
+      "tags": ["sas", "missing", "special_missing", "ordering"]
+    },
+    {
+      "dataset_id": "LANG_PYTHON_DATETIME_001",
+      "name": "Python datetime Module Semantics and Behaviors",
+      "category": "languages",
+      "subcategory": "python_datetime",
+      "descriptor_path": "knowledge/languages/python/datetime_semantics.meta.json",
+      "content_path": "knowledge/languages/python/datetime_semantics.json",
+      "status": "active",
+      "version": "1.0.0",
+      "tags": ["python", "datetime", "timedelta", "strptime"]
+    },
+    {
+      "dataset_id": "LANG_SQL_NULL_001",
+      "name": "SQL Null Semantics and Dialect Differences",
+      "category": "languages",
+      "subcategory": "sql_null",
+      "descriptor_path": "knowledge/languages/sql/null_semantics.meta.json",
+      "content_path": "knowledge/languages/sql/null_semantics.json",
+      "status": "active",
+      "version": "1.0.0",
+      "tags": ["sql", "null", "coalesce", "oracle_empty_string"]
+    },
+    {
+      "dataset_id": "MAP_DATES_001",
+      "name": "Cross-Language Date and Timestamp Compatibility Graph",
+      "category": "cross_language_mappings",
+      "subcategory": "dates",
+      "descriptor_path": "knowledge/cross_language_mappings/date_mappings.meta.json",
+      "content_path": "knowledge/cross_language_mappings/date_mappings.json",
+      "status": "active",
+      "version": "1.0.0",
+      "tags": ["cross_language", "mappings", "sas_to_python", "epoch_conversion"]
+    },
+    {
+      "dataset_id": "MAP_NUMBERS_001",
+      "name": "Cross-Language Numeric and Arithmetic Compatibility Graph",
+      "category": "cross_language_mappings",
+      "subcategory": "numbers",
+      "descriptor_path": "knowledge/cross_language_mappings/numeric_mappings.meta.json",
+      "content_path": "knowledge/cross_language_mappings/numeric_mappings.json",
+      "status": "active",
+      "version": "1.0.0",
+      "tags": ["cross_language", "mappings", "int_division", "decimal", "rounding"]
+    },
+    {
+      "dataset_id": "MAP_NULLS_001",
+      "name": "Cross-Language Null and Missing Value Compatibility Graph",
+      "category": "cross_language_mappings",
+      "subcategory": "nulls",
+      "descriptor_path": "knowledge/cross_language_mappings/null_mappings.meta.json",
+      "content_path": "knowledge/cross_language_mappings/null_mappings.json",
+      "status": "active",
+      "version": "1.0.0",
+      "tags": ["cross_language", "mappings", "null", "missing", "three_valued_logic"]
+    }
+  ]
+}

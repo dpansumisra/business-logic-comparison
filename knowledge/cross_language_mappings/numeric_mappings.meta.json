@@ -1,0 +1,55 @@
+{
+  "dataset_id": "MAP_NUMBERS_001",
+  "name": "Cross-Language Numeric and Arithmetic Compatibility Graph",
+  "description": "Mappings and preservation rules for integer division, floating point, arbitrary precision decimals, and rounding across C++, Python, SQL, JS, and SAS.",
+  "category": "cross_language_mappings",
+  "subcategory": "numbers",
+  "version": "1.0.0",
+  "status": "active",
+  "content_path": "knowledge/cross_language_mappings/numeric_mappings.json",
+  "record_count": 5,
+  "supported_languages": [
+    "C++",
+    "Python",
+    "SQL",
+    "JavaScript",
+    "SAS"
+  ],
+  "supported_formats": [
+    "int_division",
+    "decimal_scale",
+    "js_number_to_int",
+    "sas_numeric_float"
+  ],
+  "tags": [
+    "cross_language",
+    "mappings",
+    "int_division",
+    "decimal",
+    "rounding"
+  ],
+  "concepts": [
+    "CONCEPT_INTEGER_DIVISION",
+    "CONCEPT_FIXED_DECIMAL",
+    "CONCEPT_ROUNDING_MODE"
+  ],
+  "when_to_retrieve": [
+    "When translating division expressions across C++, Python, JS, and SQL",
+    "When translating SQL DECIMAL/NUMERIC to Python"
+  ],
+  "when_not_to_retrieve": [
+    "When handling non-numeric data types"
+  ],
+  "retrieval_guidance": "Watch out for negative operands in integer division: C++ truncates to 0; Python // floors to -inf.",
+  "source_type": "combined",
+  "sources": [
+    "SRC_PYTHON_DOCS",
+    "SRC_POSTGRES_DOCS",
+    "SRC_ECMA_262"
+  ],
+  "date_created": "2026-11-16",
+  "date_update": "2026-11-16",
+  "date_current": null,
+  "license": "See individual source records",
+  "schema_ref": "schemas/mapping.schema.json"
+}

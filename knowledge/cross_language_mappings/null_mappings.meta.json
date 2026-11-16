@@ -1,0 +1,54 @@
+{
+  "dataset_id": "MAP_NULLS_001",
+  "name": "Cross-Language Null and Missing Value Compatibility Graph",
+  "description": "Rules for converting and preserving null and missing value behavior across SQL, Python, SAS, and JavaScript.",
+  "category": "cross_language_mappings",
+  "subcategory": "nulls",
+  "version": "1.0.0",
+  "status": "active",
+  "content_path": "knowledge/cross_language_mappings/null_mappings.json",
+  "record_count": 3,
+  "supported_languages": [
+    "SQL",
+    "Python",
+    "SAS",
+    "JavaScript"
+  ],
+  "supported_formats": [
+    "sql_null",
+    "python_none",
+    "sas_missing",
+    "js_null_undefined"
+  ],
+  "tags": [
+    "cross_language",
+    "mappings",
+    "null",
+    "missing",
+    "three_valued_logic"
+  ],
+  "concepts": [
+    "CONCEPT_SQL_NULL",
+    "CONCEPT_SAS_MISSING",
+    "NULL_CHECK",
+    "MISSING_VALUE_COMPARISON"
+  ],
+  "when_to_retrieve": [
+    "When migrating conditional checks or database filtering expressions"
+  ],
+  "when_not_to_retrieve": [
+    "When fields are non-nullable"
+  ],
+  "retrieval_guidance": "SQL three-valued logic is not natively supported by Python boolean operators. Translating WHERE clauses requires explicit null checks.",
+  "source_type": "combined",
+  "sources": [
+    "SRC_POSTGRES_DOCS",
+    "SRC_PYTHON_DOCS",
+    "SRC_SAS_DOCS"
+  ],
+  "date_created": "2026-11-16",
+  "date_update": "2026-11-16",
+  "date_current": null,
+  "license": "See individual source records",
+  "schema_ref": "schemas/mapping.schema.json"
+}

@@ -1,0 +1,52 @@
+{
+  "dataset_id": "OVERFLOW_SEMANTICS_001",
+  "name": "Integer Division and Overflow Semantics",
+  "description": "Rules for integer division truncation direction (floor vs towards-zero), signed overflow (UB vs wrap vs auto-promote), and modulo signs.",
+  "category": "numbers",
+  "subcategory": "overflow_division",
+  "version": "1.0.0",
+  "status": "active",
+  "content_path": "knowledge/numbers/overflow_semantics.json",
+  "record_count": 3,
+  "supported_languages": [
+    "C++",
+    "Python",
+    "JavaScript",
+    "SQL",
+    "SAS",
+    "Java"
+  ],
+  "supported_formats": ["integer_division", "modulo_remainder", "overflow_handling"],
+  "tags": [
+    "integer_division",
+    "floor_division",
+    "truncation",
+    "modulo",
+    "overflow",
+    "undefined_behavior"
+  ],
+  "concepts": [
+    "CONCEPT_INTEGER_DIVISION",
+    "CONCEPT_MODULO_REMAINDER",
+    "CONCEPT_INTEGER_OVERFLOW"
+  ],
+  "when_to_retrieve": [
+    "When translating integer division (e.g. C++ a/b to Python a//b or JS Math.floor(a/b))",
+    "When modulo arithmetic involves negative operands",
+    "When integer values approach 32-bit or 64-bit boundaries"
+  ],
+  "when_not_to_retrieve": [
+    "When operating strictly on floating point decimal numbers"
+  ],
+  "retrieval_guidance": "In Python, -7 // 2 is -4 (floor towards -infinity). In C++, -7 / 2 is -3 (truncation towards zero). In JavaScript, -7 / 2 is -3.5 (float). Modulo -7 % 2 is 1 in Python, but -1 in C++ and JavaScript.",
+  "source_type": "combined",
+  "sources": [
+    "SRC_PYTHON_DOCS",
+    "SRC_ECMA_262"
+  ],
+  "date_created": "2026-11-16",
+  "date_update": "2026-11-16",
+  "date_current": null,
+  "license": "See individual source records",
+  "schema_ref": "schemas/numeric.schema.json"
+}

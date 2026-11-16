@@ -1,0 +1,49 @@
+{
+  "dataset_id": "PRECISION_ROUNDING_001",
+  "name": "Precision and Rounding Semantics",
+  "description": "Rules for rounding modes (Round Half Up, Round Half To Even / Banker's Rounding, Truncation) across Python, SAS, SQL, and JS.",
+  "category": "numbers",
+  "subcategory": "rounding",
+  "version": "1.0.0",
+  "status": "active",
+  "content_path": "knowledge/numbers/precision_rounding.json",
+  "record_count": 3,
+  "supported_languages": [
+    "Python",
+    "SAS",
+    "SQL",
+    "JavaScript",
+    "Java"
+  ],
+  "supported_formats": ["bankers_rounding", "round_half_up", "decimal_scale"],
+  "tags": [
+    "rounding",
+    "bankers_rounding",
+    "round_half_even",
+    "round_half_up",
+    "float_precision"
+  ],
+  "concepts": [
+    "CONCEPT_ROUNDING_MODE",
+    "DECIMAL_ROUND"
+  ],
+  "when_to_retrieve": [
+    "When migrating ROUND() functions between Python, SAS, and SQL",
+    "When financial calculations produce 1 cent differences due to tie-breaking strategy"
+  ],
+  "when_not_to_retrieve": [
+    "When working exclusively with exact integer operations"
+  ],
+  "retrieval_guidance": "Python 3 round(2.5) is 2 (round half to even). SAS ROUND(2.5) is 3 (round half away from zero / round half up). SQL ROUND(2.5) in most dialects is 3.",
+  "source_type": "combined",
+  "sources": [
+    "SRC_PYTHON_DOCS",
+    "SRC_SAS_DOCS",
+    "SRC_POSTGRES_DOCS"
+  ],
+  "date_created": "2026-11-16",
+  "date_update": "2026-11-16",
+  "date_current": null,
+  "license": "See individual source records",
+  "schema_ref": "schemas/numeric.schema.json"
+}

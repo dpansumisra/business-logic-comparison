@@ -1,0 +1,61 @@
+{
+  "dataset_id": "OVERFLOW_SEMANTICS_001",
+  "version": "1.0.0",
+  "records": [
+    {
+      "record_id": "SEM_INT_DIVISION_TRUNC_VS_FLOOR",
+      "concept_id": "CONCEPT_INTEGER_DIVISION",
+      "name": "Integer Division: Truncation Towards Zero vs Floor Towards Negative Infinity",
+      "rounding_behavior": "language_divergent",
+      "interpretation": {
+        "c_cpp_java_behavior": "Integer division (/) truncates toward zero (e.g., 7 / 2 = 3; -7 / 2 = -3).",
+        "python_behavior": "Integer division (//) floors toward negative infinity (e.g., 7 // 2 = 3; -7 // 2 = -4).",
+        "javascript_behavior": "Division (/) always performs floating-point division (e.g., 7 / 2 = 3.5; -7 / 2 = -3.5). Math.trunc(a / b) emulates C++; Math.floor(a / b) emulates Python.",
+        "sql_behavior": "In SQL Server / PostgreSQL, integer / integer performs integer division with truncation toward zero. In Oracle / Snowflake, division yields exact decimal/float."
+      },
+      "risks": [
+        "Migrating C++ or SQL integer division of negative numbers to Python // results in silent off-by-one errors (-3 vs -4)"
+      ],
+      "validation_rules": [
+        "To preserve C++ truncation toward zero in Python, use: int(a / b) or math.trunc(a / b) instead of a // b"
+      ],
+      "source_references": ["SRC_PYTHON_DOCS"]
+    },
+    {
+      "record_id": "SEM_MODULO_SIGN_RULES",
+      "concept_id": "CONCEPT_MODULO_REMAINDER",
+      "name": "Modulo Operator Sign Semantics (% Operator)",
+      "interpretation": {
+        "python_behavior": "Sign of result matches divisor (b): -7 % 2 = 1; 7 % -2 = -1.",
+        "cpp_java_js_behavior": "Sign of result matches dividend (a): -7 % 2 = -1; 7 % -2 = 1 (remainder operation).",
+        "mathematical_distinction": "Python computes mathematical modulo (a - b * floor(a / b)). C++/Java/JS compute remainder (a - b * trunc(a / b))."
+      },
+      "risks": [
+        "Negative indexing or cyclic array indexing (-1 % N) yields negative index in C++/JS but positive index in Python"
+      ],
+      "validation_rules": [
+        "When translating Python a % b to JS: use ((a % b) + b) % b to preserve Python positive modulo"
+      ],
+      "source_references": ["SRC_PYTHON_DOCS", "SRC_ECMA_262"]
+    },
+    {
+      "record_id": "SEM_INTEGER_OVERFLOW_HANDLING",
+      "concept_id": "CONCEPT_INTEGER_OVERFLOW",
+      "name": "Signed Integer Arithmetic Overflow Handling",
+      "overflow_behavior": "language_divergent",
+      "interpretation": {
+        "cpp_behavior": "Signed integer overflow is Undefined Behavior (UB); compilers may optimize away safety checks.",
+        "java_csharp_behavior": "Wraps modulo 2^32 or 2^64 using 2's complement representation without throwing exception (unless 'checked' block in C#).",
+        "python_behavior": "Transparently promotes to arbitrary precision integer; overflow impossible for pure integers.",
+        "javascript_behavior": "Silently transitions into loss-of-precision floats above 2^53 - 1."
+      },
+      "risks": [
+        "Algorithms relying on 32-bit integer overflow wrapping (e.g. hash codes) fail in Python because integers grow unboundedly"
+      ],
+      "validation_rules": [
+        "In Python, emulate 32-bit wrap explicitly: (result & 0xFFFFFFFF) or ctypes.c_int32(result).value"
+      ],
+      "source_references": ["SRC_PYTHON_DOCS"]
+    }
+  ]
+}

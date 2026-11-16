@@ -1,0 +1,53 @@
+{
+  "dataset_id": "AMBIGUOUS_DATES_001",
+  "name": "Ambiguous Date Patterns and Disambiguation Policies",
+  "description": "Rules for identifying and resolving ambiguous date strings, including 2-digit year pivot windows and month/day order permutations.",
+  "category": "dates",
+  "subcategory": "ambiguity",
+  "version": "1.0.0",
+  "status": "active",
+  "content_path": "knowledge/dates/ambiguous_dates.json",
+  "record_count": 3,
+  "supported_languages": [
+    "SAS",
+    "Python",
+    "SQL",
+    "JavaScript"
+  ],
+  "supported_formats": [
+    "two_digit_year",
+    "numeric_string_slash_separated",
+    "unseparated_six_digit"
+  ],
+  "tags": [
+    "ambiguity",
+    "yearcutoff",
+    "pivot",
+    "two_digit_year",
+    "month_day_permutation"
+  ],
+  "concepts": [
+    "DATE_PARSE",
+    "AMBIGUITY_RESOLUTION"
+  ],
+  "when_to_retrieve": [
+    "When parsing 2-digit year strings (e.g. '24' -> 1924 vs 2024)",
+    "When encountering dates where day <= 12 and month/day ordering is uncertain",
+    "When code relies on default SAS YEARCUTOFF or Python %y behavior"
+  ],
+  "when_not_to_retrieve": [
+    "When formats use explicit 4-digit years and named months (e.g. '16NOV2026')"
+  ],
+  "retrieval_guidance": "Never guess month vs day without locale context. If both day and month are <= 12, flag classification as UNCERTAIN.",
+  "source_type": "combined",
+  "sources": [
+    "SRC_SAS_DOCS",
+    "SRC_PYTHON_DOCS",
+    "SRC_UNICODE_CLDR"
+  ],
+  "date_created": "2026-11-16",
+  "date_update": "2026-11-16",
+  "date_current": null,
+  "license": "See individual source records",
+  "schema_ref": "schemas/date.schema.json"
+}

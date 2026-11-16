@@ -1,0 +1,42 @@
+{
+  "dataset_id": "LANG_SAS_MISSING_001",
+  "version": "1.0.0",
+  "records": [
+    {
+      "record_id": "SAS_SEM_SPECIAL_MISSINGS_SURVEY",
+      "concept_id": "CONCEPT_SAS_MISSING",
+      "name": "SAS 27 Special Missing Values (.A through .Z and ._)",
+      "language": "SAS",
+      "representation": ".A through .Z",
+      "data_type_context": "SAS numeric variables",
+      "equality_behavior": "Individual identity: .A != .B; .A == .A is true",
+      "truthiness": "Falsy in IF condition",
+      "ordering_behavior": "._ < . < .A < .B < ... < .Z < regular numbers",
+      "aggregation_behavior": "Excluded from SUM, MEAN, STD",
+      "silent_gotchas": [
+        "In clinical/survey datasets, .D means Don't Know, .R means Refused. Mapping all to Python None loses survey categorical metadata."
+      ],
+      "migration_preservation_rules": [
+        "If survey/clinical semantics matter, use custom Sentinel Enum or Pandas Categorical rather than plain None"
+      ],
+      "source_references": ["SRC_SAS_DOCS"]
+    },
+    {
+      "record_id": "SAS_SEM_MISSING_LESS_THAN_CHECK",
+      "concept_id": "MISSING_VALUE_COMPARISON",
+      "name": "SAS Missing Value Less-Than Condition Trap",
+      "language": "SAS",
+      "representation": "if x < 100",
+      "equality_behavior": "Evaluates to true when x is .",
+      "truthiness": "Evaluates condition to true",
+      "ordering_behavior": "Missing value is less than all finite negative numbers",
+      "silent_gotchas": [
+        "`if score < 50 then grade = 'F';` in SAS will award 'F' to students with missing scores!"
+      ],
+      "migration_preservation_rules": [
+        "Convert to Python: `if score is not None and score < 50:`"
+      ],
+      "source_references": ["SRC_SAS_DOCS"]
+    }
+  ]
+}

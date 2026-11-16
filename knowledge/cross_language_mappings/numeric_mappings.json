@@ -1,0 +1,249 @@
+{
+  "dataset_id": "MAP_NUMBERS_001",
+  "version": "1.0.0",
+  "records": [
+    {
+      "mapping_id": "MAP_CPP_INT_DIV_TO_PYTHON",
+      "concept_id": "CONCEPT_INTEGER_DIVISION",
+      "source": {
+        "language": "C++",
+        "representation": "a / b",
+        "epoch": null,
+        "unit": null,
+        "type": "int"
+      },
+      "target": {
+        "language": "Python",
+        "representation": "int(a / b) or math.trunc(a / b)",
+        "epoch": null,
+        "unit": null,
+        "type": "int"
+      },
+      "compatibility": "CONDITIONALLY_EQUIVALENT",
+      "conversion": {
+        "strategy": "explicit_truncation_emulation",
+        "formula_description": "Use int(a / b) or math.trunc(a / b). Do NOT use a // b if operands can be negative.",
+        "code_example": "result = int(a / b) # preserves C++ truncation toward zero",
+        "target_library": "built-in"
+      },
+      "semantic_differences": [
+        {
+          "difference": "C++ integer division truncates towards zero (-7 / 2 = -3), whereas Python // floors towards negative infinity (-7 // 2 = -4).",
+          "risk": "silent_off_by_one_negative_division",
+          "severity": "high"
+        }
+      ],
+      "edge_cases": [
+        "negative_operands",
+        "division_by_zero",
+        "overflow_on_int_min_divided_by_minus_one"
+      ],
+      "preservation_rules": [
+        "If both operands are guaranteed non-negative, `a // b` is safe.",
+        "If operands can be negative, MUST use `int(a / b)` or `math.trunc(a / b)`."
+      ],
+      "related_knowledge": [
+        "SEM_INT_DIVISION_TRUNC_VS_FLOOR",
+        "TYPE_INT32_SIGNED"
+      ],
+      "confidence": "verified",
+      "evidence_sources": [
+        "SRC_PYTHON_DOCS"
+      ]
+    },
+    {
+      "mapping_id": "MAP_SQL_DECIMAL_TO_PYTHON_DECIMAL",
+      "concept_id": "CONCEPT_FIXED_DECIMAL",
+      "source": {
+        "language": "SQL",
+        "representation": "DECIMAL(p, s)",
+        "epoch": null,
+        "unit": null,
+        "type": "DECIMAL"
+      },
+      "target": {
+        "language": "Python",
+        "representation": "decimal.Decimal",
+        "epoch": null,
+        "unit": null,
+        "type": "decimal.Decimal"
+      },
+      "compatibility": "EQUIVALENT",
+      "conversion": {
+        "strategy": "construct_decimal_from_string",
+        "formula_description": "Convert SQL decimal to Python decimal.Decimal. Never cast via intermediate float.",
+        "code_example": "from decimal import Decimal; val = Decimal(str(sql_value))",
+        "target_library": "decimal"
+      },
+      "semantic_differences": [
+        {
+          "difference": "SQL enforces fixed scale (e.g. s=2); Python Decimal scale expands dynamically unless explicitly quantized.",
+          "risk": "scale_expansion_in_calculation",
+          "severity": "medium"
+        }
+      ],
+      "edge_cases": [
+        "intermediate_float_casting_precision_loss",
+        "quantize_rounding_mode"
+      ],
+      "preservation_rules": [
+        "Always pass string to Decimal() constructor.",
+        "Apply .quantize(Decimal('0.01'), rounding=ROUND_HALF_UP) if SQL scale must be preserved."
+      ],
+      "related_knowledge": [
+        "TYPE_FIXED_DECIMAL",
+        "RND_HALF_EVEN_VS_HALF_UP"
+      ],
+      "confidence": "verified",
+      "evidence_sources": [
+        "SRC_POSTGRES_DOCS",
+        "SRC_PYTHON_DOCS"
+      ]
+    },
+    {
+      "mapping_id": "MAP_JS_NUMBER_TO_CPP_INT",
+      "concept_id": "CONCEPT_INTEGER",
+      "source": {
+        "language": "JavaScript",
+        "representation": "Number",
+        "epoch": null,
+        "unit": null,
+        "type": "Number (float64)"
+      },
+      "target": {
+        "language": "C++",
+        "representation": "int or long long",
+        "epoch": null,
+        "unit": null,
+        "type": "int32_t / int64_t"
+      },
+      "compatibility": "CONDITIONALLY_EQUIVALENT",
+      "conversion": {
+        "strategy": "safe_range_and_truncation_check",
+        "formula_description": "Verify JS number is integer within target int range before casting.",
+        "code_example": "if (std::isnan(js_num) || js_num < INT_MIN || js_num > INT_MAX) throw std::overflow_error(\"Out of bounds\"); int val = static_cast<int>(js_num);",
+        "target_library": "standard"
+      },
+      "semantic_differences": [
+        {
+          "difference": "JS Number can hold fractional values and NaN/Infinity; C++ int is strictly integer.",
+          "risk": "undefined_behavior_or_truncation",
+          "severity": "high"
+        }
+      ],
+      "edge_cases": [
+        "nan_and_infinity_in_float",
+        "exceeding_32bit_int_bounds"
+      ],
+      "preservation_rules": [
+        "Check for NaN and range bounds prior to cast."
+      ],
+      "related_knowledge": [
+        "TYPE_JAVASCRIPT_SAFE_INTEGER",
+        "TYPE_INT32_SIGNED"
+      ],
+      "confidence": "high",
+      "evidence_sources": [
+        "SRC_ECMA_262"
+      ]
+    },
+    {
+      "mapping_id": "MAP_SAS_NUMERIC_TO_PYTHON_FLOAT",
+      "concept_id": "CONCEPT_FLOATING_POINT",
+      "source": {
+        "language": "SAS",
+        "representation": "numeric",
+        "epoch": null,
+        "unit": null,
+        "type": "64_bit_float"
+      },
+      "target": {
+        "language": "Python",
+        "representation": "float or pandas Float64",
+        "epoch": null,
+        "unit": null,
+        "type": "float"
+      },
+      "compatibility": "CONVERTIBLE",
+      "conversion": {
+        "strategy": "map_missing_to_none_or_nan",
+        "formula_description": "Convert SAS valid numbers to Python float. Map SAS missing values (. and .A-.Z) to None or float('nan').",
+        "code_example": "py_val = None if (sas_val is None or sas_val in ('.', '._') or (isinstance(sas_val, str) and sas_val.startswith('.'))) else float(sas_val)",
+        "target_library": "built-in"
+      },
+      "semantic_differences": [
+        {
+          "difference": "SAS missing values behave as numbers smaller than all negative numbers in comparisons. In Python, None cannot be compared with numbers.",
+          "risk": "comparison_semantic_breakage",
+          "severity": "critical"
+        }
+      ],
+      "edge_cases": [
+        "sas_special_missing_codes_a_to_z",
+        "division_by_zero_generating_missing_value"
+      ],
+      "preservation_rules": [
+        "Explicitly guard any downstream comparisons (<, <=, >, >=) against None."
+      ],
+      "related_knowledge": [
+        "TYPE_SAS_NUMERIC",
+        "NULL_SAS_NUMERIC_MISSING"
+      ],
+      "confidence": "verified",
+      "evidence_sources": [
+        "SRC_SAS_DOCS",
+        "SRC_PYTHON_DOCS"
+      ]
+    },
+    {
+      "mapping_id": "MAP_SAS_ROUND_TO_PYTHON_ROUND",
+      "concept_id": "CONCEPT_ROUNDING_MODE",
+      "source": {
+        "language": "SAS",
+        "representation": "ROUND(x, round_off_unit)",
+        "epoch": null,
+        "unit": null,
+        "type": "round_half_up"
+      },
+      "target": {
+        "language": "Python",
+        "representation": "round(x, n) or F.round(col, n)",
+        "epoch": null,
+        "unit": null,
+        "type": "round_half_even"
+      },
+      "compatibility": "CONDITIONALLY_EQUIVALENT",
+      "conversion": {
+        "strategy": "explicit_round_half_up_preservation",
+        "formula_description": "SAS ROUND() rounds half-way ties away from zero (ROUND_HALF_UP). Python built-in round() and PySpark F.round() use Banker's rounding (ROUND_HALF_EVEN). To preserve SAS behavior for monetary calculations, use Decimal.quantize(..., rounding=ROUND_HALF_UP) or explicit +0.0000001 offset.",
+        "code_example": "from decimal import Decimal, ROUND_HALF_UP; Decimal(str(val)).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)",
+        "target_library": "decimal"
+      },
+      "semantic_differences": [
+        {
+          "difference": "SAS round(2.5, 1) is 3 (round half away from zero). Python round(2.5) is 2 (banker's rounding to even).",
+          "risk": "monetary_variance_and_reconciliation_mismatch",
+          "severity": "high"
+        }
+      ],
+      "edge_cases": [
+        "exact_half_way_ties",
+        "floating_point_imprecision_before_rounding",
+        "round_off_unit_vs_decimal_scale"
+      ],
+      "preservation_rules": [
+        "In financial ETL, do not replace SAS ROUND(x, .01) with standard Python round(x, 2) without verifying if Banker's rounding variance is acceptable to business.",
+        "Use Decimal.quantize with ROUND_HALF_UP to strictly preserve SAS accounting totals."
+      ],
+      "related_knowledge": [
+        "RND_HALF_EVEN_VS_HALF_UP",
+        "RND_FLOAT_DECIMAL_REPRESENTATION_ERROR"
+      ],
+      "confidence": "verified",
+      "evidence_sources": [
+        "SRC_SAS_DOCS",
+        "SRC_PYTHON_DOCS"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "dataset_id": "NUMERIC_TYPES_001",
+  "name": "Universal Numeric Types and Representations",
+  "description": "Cross-language specifications of integer, floating-point, and fixed-point numeric types, bit widths, ranges, and precision limits.",
+  "category": "numbers",
+  "subcategory": "types",
+  "version": "1.0.0",
+  "status": "active",
+  "content_path": "knowledge/numbers/numeric_types.json",
+  "record_count": 6,
+  "supported_languages": [
+    "SAS",
+    "SQL",
+    "Python",
+    "JavaScript",
+    "C++",
+    "Java",
+    "C#"
+  ],
+  "supported_formats": [
+    "int32",
+    "int64",
+    "float64",
+    "arbitrary_precision_int",
+    "fixed_decimal"
+  ],
+  "tags": [
+    "numeric",
+    "integer",
+    "float",
+    "ieee754",
+    "decimal",
+    "bigint",
+    "sas_numeric"
+  ],
+  "concepts": [
+    "CONCEPT_INTEGER",
+    "CONCEPT_FLOATING_POINT",
+    "CONCEPT_FIXED_DECIMAL",
+    "NUMERIC_CONVERSION"
+  ],
+  "when_to_retrieve": [
+    "When translating numeric calculations between statically typed and dynamically typed languages",
+    "When evaluating potential precision loss between double float and exact decimal",
+    "When handling JavaScript Number 53-bit integer limit"
+  ],
+  "when_not_to_retrieve": [
+    "When performing string formatting with no numeric manipulation"
+  ],
+  "retrieval_guidance": "SAS stores all numbers as 64-bit double precision floats by default. JavaScript Number is 64-bit float with 53 bits of mantissa.",
+  "source_type": "combined",
+  "sources": [
+    "SRC_IEEE_754",
+    "SRC_SAS_DOCS",
+    "SRC_PYTHON_DOCS",
+    "SRC_ECMA_262"
+  ],
+  "date_created": "2026-11-16",
+  "date_update": "2026-11-16",
+  "date_current": null,
+  "license": "See individual source records",
+  "schema_ref": "schemas/numeric.schema.json"
+}

@@ -1,0 +1,188 @@
+{
+  "dataset_id": "NUMERIC_TYPES_001",
+  "version": "1.0.0",
+  "records": [
+    {
+      "record_id": "TYPE_IEEE754_DOUBLE",
+      "concept_id": "CONCEPT_FLOATING_POINT",
+      "name": "IEEE 754 Binary64 Double Precision Floating Point",
+      "category_type": "floating_point",
+      "bit_width": 64,
+      "signed": true,
+      "range": {
+        "min": "-1.7976931348623157e+308",
+        "max": "1.7976931348623157e+308"
+      },
+      "precision_digits": 15,
+      "ieee_754_standard": "binary64",
+      "rounding_behavior": "round_to_nearest_ties_to_even",
+      "overflow_behavior": "+/- Infinity",
+      "division_by_zero_behavior": "+/- Infinity or NaN (0.0 / 0.0)",
+      "language_mappings": {
+        "Python": "float",
+        "JavaScript": "Number",
+        "C++": "double",
+        "Java": "double",
+        "C#": "double",
+        "SAS": "numeric (default 8 bytes)"
+      },
+      "risks": [
+        "Binary representation cannot represent decimal fractions like 0.1 or 0.2 exactly",
+        "Integers exceeding 2^53 (9,007,199,254,740,992) lose least significant digits"
+      ],
+      "validation_rules": [
+        "Do not use binary64 for exact financial currency arithmetic"
+      ],
+      "source_references": ["SRC_IEEE_754"]
+    },
+    {
+      "record_id": "TYPE_FIXED_DECIMAL",
+      "concept_id": "CONCEPT_FIXED_DECIMAL",
+      "name": "Exact Fixed-Point Decimal",
+      "category_type": "fixed_point",
+      "bit_width": null,
+      "signed": true,
+      "range": {
+        "min": "user_configurable_scale_and_precision",
+        "max": "user_configurable_scale_and_precision"
+      },
+      "precision_digits": "arbitrary / specified precision",
+      "ieee_754_standard": null,
+      "rounding_behavior": "configurable (ROUND_HALF_EVEN, ROUND_HALF_UP)",
+      "overflow_behavior": "Overflow error / DecimalException",
+      "division_by_zero_behavior": "ZeroDivisionError / DivisionByZero Exception",
+      "language_mappings": {
+        "Python": "decimal.Decimal",
+        "SQL": "DECIMAL(p, s) / NUMERIC(p, s)",
+        "Java": "java.math.BigDecimal",
+        "C#": "System.Decimal",
+        "JavaScript": "requires big.js or decimal.js library"
+      },
+      "risks": [
+        "Converting to float in intermediate calculation silently destroys exact decimal precision"
+      ],
+      "validation_rules": [
+        "Always pass string representations to decimal constructors (e.g. Decimal('0.1') not Decimal(0.1))"
+      ],
+      "source_references": ["SRC_POSTGRES_DOCS", "SRC_PYTHON_DOCS"]
+    },
+    {
+      "record_id": "TYPE_INT32_SIGNED",
+      "concept_id": "CONCEPT_INTEGER",
+      "name": "32-Bit Two's Complement Signed Integer",
+      "category_type": "integer",
+      "bit_width": 32,
+      "signed": true,
+      "range": {
+        "min": -2147483648,
+        "max": 2147483647
+      },
+      "precision_digits": 9,
+      "ieee_754_standard": null,
+      "rounding_behavior": "truncation_on_division",
+      "overflow_behavior": "Undefined behavior in C++; 2's complement wrap in Java/C#; auto-promotion in Python",
+      "division_by_zero_behavior": "Hardware exception / crash / error",
+      "language_mappings": {
+        "C++": "int / int32_t",
+        "Java": "int",
+        "C#": "int",
+        "SQL": "INTEGER / INT4",
+        "Python": "int (unbounded)",
+        "JavaScript": "Number (converted via bitwise operators to 32-bit signed int)"
+      },
+      "risks": [
+        "Arithmetic overflow wrapping or UB when porting Python large ints to C++/Java"
+      ],
+      "validation_rules": [
+        "Range checks required before casting unbounded int to 32-bit int"
+      ],
+      "source_references": ["SRC_PYTHON_DOCS"]
+    },
+    {
+      "record_id": "TYPE_PYTHON_INT_ARBITRARY",
+      "concept_id": "CONCEPT_INTEGER",
+      "name": "Python Arbitrary Precision Integer",
+      "category_type": "integer",
+      "bit_width": null,
+      "signed": true,
+      "range": {
+        "min": "-infinity (bounded only by available RAM)",
+        "max": "+infinity"
+      },
+      "precision_digits": "unlimited",
+      "ieee_754_standard": null,
+      "rounding_behavior": "floor_division_towards_negative_infinity",
+      "overflow_behavior": "never overflows (allocates additional memory words)",
+      "division_by_zero_behavior": "ZeroDivisionError",
+      "language_mappings": {
+        "Python": "int",
+        "Java": "java.math.BigInteger",
+        "C#": "System.Numerics.BigInteger",
+        "JavaScript": "BigInt"
+      },
+      "risks": [
+        "Converting Python int to C++ int, Java int, or JS Number can overflow or lose precision"
+      ],
+      "validation_rules": [
+        "Verify integer fits within target bit-width constraints"
+      ],
+      "source_references": ["SRC_PYTHON_DOCS"]
+    },
+    {
+      "record_id": "TYPE_SAS_NUMERIC",
+      "concept_id": "CONCEPT_FLOATING_POINT",
+      "name": "SAS Native Numeric Variable",
+      "category_type": "floating_point",
+      "bit_width": 64,
+      "signed": true,
+      "range": {
+        "min": "-1.79e+308",
+        "max": "1.79e+308"
+      },
+      "precision_digits": 15,
+      "ieee_754_standard": "binary64",
+      "rounding_behavior": "round_to_nearest",
+      "overflow_behavior": "Assigns missing value . and logs mathematical overflow warning",
+      "division_by_zero_behavior": "Assigns missing value . and writes warning to SAS log",
+      "language_mappings": {
+        "SAS": "numeric",
+        "Python": "float (or pandas nullable float Float64)"
+      },
+      "risks": [
+        "SAS numeric missing values (. or .A-.Z) evaluate as less than negative numbers in comparisons"
+      ],
+      "validation_rules": [
+        "In SAS: if var < 0 is TRUE for missing values! In Python: if var < 0 with None raises TypeError"
+      ],
+      "source_references": ["SRC_SAS_DOCS"]
+    },
+    {
+      "record_id": "TYPE_JAVASCRIPT_SAFE_INTEGER",
+      "concept_id": "CONCEPT_INTEGER",
+      "name": "JavaScript Safe Integer Window (Number.MAX_SAFE_INTEGER)",
+      "category_type": "integer_in_float",
+      "bit_width": 53,
+      "signed": true,
+      "range": {
+        "min": -9007199254740991,
+        "max": 9007199254740991
+      },
+      "precision_digits": 15,
+      "ieee_754_standard": "binary64",
+      "rounding_behavior": "rounds_to_nearest_even_above_limit",
+      "overflow_behavior": "Loss of least significant integer precision without warning",
+      "division_by_zero_behavior": "Infinity",
+      "language_mappings": {
+        "JavaScript": "Number / BigInt",
+        "Python": "int"
+      },
+      "risks": [
+        "64-bit database IDs (SQL BIGINT) or Snowflake IDs lose digits when parsed into standard JS Number via JSON.parse"
+      ],
+      "validation_rules": [
+        "Serialize 64-bit integer IDs as strings or use BigInt in JavaScript"
+      ],
+      "source_references": ["SRC_ECMA_262"]
+    }
+  ]
+}

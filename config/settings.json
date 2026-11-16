@@ -1,0 +1,14 @@
+{
+  "app_name": "Universal Data Format & Semantics Knowledge Repository",
+  "version": "1.0.0",
+  "registry_path": "registry/knowledge_registry.json",
+  "categories_path": "registry/category_registry.json",
+  "languages_path": "registry/language_registry.json",
+  "sources_path": "sources/source_catalog.json",
+  "schemas_dir": "schemas",
+  "knowledge_dir": "knowledge",
+  "cache_enabled": true,
+  "max_llm_context_tokens": 4096,
+  "default_confidence_threshold": "medium",
+  "strict_schema_validation": true
+}

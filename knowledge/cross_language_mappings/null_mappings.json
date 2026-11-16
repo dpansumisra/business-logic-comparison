@@ -1,0 +1,159 @@
+{
+  "dataset_id": "MAP_NULLS_001",
+  "version": "1.0.0",
+  "records": [
+    {
+      "mapping_id": "MAP_SQL_NULL_TO_PYTHON_NONE",
+      "concept_id": "CONCEPT_SQL_NULL",
+      "source": {
+        "language": "SQL",
+        "representation": "NULL",
+        "epoch": null,
+        "unit": null,
+        "type": "NULL"
+      },
+      "target": {
+        "language": "Python",
+        "representation": "None",
+        "epoch": null,
+        "unit": null,
+        "type": "NoneType"
+      },
+      "compatibility": "CONDITIONALLY_EQUIVALENT",
+      "conversion": {
+        "strategy": "map_sql_null_to_none_and_guard_comparisons",
+        "formula_description": "Convert SQL NULL to Python None. Replace SQL 'IS NULL' with 'is None', 'IS NOT NULL' with 'is not None'.",
+        "code_example": "val = None if sql_val is None else sql_val",
+        "target_library": "built-in"
+      },
+      "semantic_differences": [
+        {
+          "difference": "In SQL, NULL = NULL yields UNKNOWN. In Python, None == None yields True.",
+          "risk": "equality_logic_inversion",
+          "severity": "critical"
+        },
+        {
+          "difference": "In SQL, NULL != 5 yields UNKNOWN (row excluded). In Python, None != 5 yields True (row included)!",
+          "risk": "filter_predicate_leak",
+          "severity": "critical"
+        }
+      ],
+      "edge_cases": [
+        "not_in_with_null",
+        "join_on_null_columns",
+        "three_valued_boolean_logic"
+      ],
+      "preservation_rules": [
+        "To replicate SQL `WHERE col != 5`: In Python MUST write: `col is not None and col != 5`",
+        "Never use plain `col != 5` in Python for nullable fields migrated from SQL."
+      ],
+      "related_knowledge": [
+        "NULL_SQL",
+        "NULL_PYTHON_NONE",
+        "SEM_NULL_SQL_COMPARE"
+      ],
+      "confidence": "verified",
+      "evidence_sources": [
+        "SRC_POSTGRES_DOCS",
+        "SRC_PYTHON_DOCS"
+      ]
+    },
+    {
+      "mapping_id": "MAP_SAS_MISSING_TO_PYTHON_NONE",
+      "concept_id": "CONCEPT_SAS_MISSING",
+      "source": {
+        "language": "SAS",
+        "representation": "numeric_missing",
+        "epoch": null,
+        "unit": null,
+        "type": "SAS . / .A-.Z"
+      },
+      "target": {
+        "language": "Python",
+        "representation": "None",
+        "epoch": null,
+        "unit": null,
+        "type": "NoneType"
+      },
+      "compatibility": "CONDITIONALLY_EQUIVALENT",
+      "conversion": {
+        "strategy": "conditional_null_check_and_comparison_guard",
+        "formula_description": "Map SAS missing values to Python None. Rewrite relational comparisons to avoid TypeError or inverted logic.",
+        "code_example": "target_val = None if (sas_val is None or sas_val in ('.', '._')) else float(sas_val)",
+        "target_library": "built-in"
+      },
+      "semantic_differences": [
+        {
+          "difference": "SAS `if x < 10` is TRUE when x is missing. Python `x < 10` throws TypeError when x is None.",
+          "risk": "runtime_crash_or_silent_branch_mismatch",
+          "severity": "critical"
+        }
+      ],
+      "edge_cases": [
+        "sas_special_missing_codes",
+        "sorting_order_differences"
+      ],
+      "preservation_rules": [
+        "To preserve SAS intended business logic, examine whether missing values should satisfy the condition.",
+        "Standard translation for valid values only: `if x is not None and x < 10:`",
+        "To strictly preserve exact SAS quirk: `if x is None or x < 10:`"
+      ],
+      "related_knowledge": [
+        "NULL_SAS_NUMERIC_MISSING",
+        "SAS_SEM_MISSING_LESS_THAN_CHECK"
+      ],
+      "confidence": "verified",
+      "evidence_sources": [
+        "SRC_SAS_DOCS",
+        "SRC_PYTHON_DOCS"
+      ]
+    },
+    {
+      "mapping_id": "MAP_JS_UNDEFINED_TO_PYTHON_NONE",
+      "concept_id": "CONCEPT_JS_NULL_UNDEFINED",
+      "source": {
+        "language": "JavaScript",
+        "representation": "undefined",
+        "epoch": null,
+        "unit": null,
+        "type": "undefined"
+      },
+      "target": {
+        "language": "Python",
+        "representation": "Key omission or sentinel object",
+        "epoch": null,
+        "unit": null,
+        "type": "SENTINEL / omission"
+      },
+      "compatibility": "CONDITIONALLY_EQUIVALENT",
+      "conversion": {
+        "strategy": "distinguish_missing_key_from_none",
+        "formula_description": "JavaScript differentiates a missing object key (undefined) from a key explicitly assigned null. In Python dicts, use dict.get(key, DEFAULT) or omission.",
+        "code_example": "val = d.get('key', DEFAULT_UNDEFINED)",
+        "target_library": "built-in"
+      },
+      "semantic_differences": [
+        {
+          "difference": "Serializing {a: undefined} drops 'a'; serializing {a: null} includes '{\"a\": null}'. In Python, {'a': None} serializes to '{\"a\": null}'.",
+          "risk": "json_payload_key_leak",
+          "severity": "medium"
+        }
+      ],
+      "edge_cases": [
+        "json_serialization_behavior",
+        "optional_function_parameters"
+      ],
+      "preservation_rules": [
+        "Do not store None in Python dict if source JS intentionally left property undefined."
+      ],
+      "related_knowledge": [
+        "NULL_JAVASCRIPT_UNDEFINED_VS_NULL"
+      ],
+      "confidence": "high",
+      "evidence_sources": [
+        "SRC_ECMA_262",
+        "SRC_PYTHON_DOCS"
+      ]
+    }
+  ]
+}

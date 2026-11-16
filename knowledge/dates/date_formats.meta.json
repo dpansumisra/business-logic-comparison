@@ -1,0 +1,61 @@
+{
+  "dataset_id": "DATE_FORMATS_001",
+  "name": "Universal Date Format Reference",
+  "description": "Definitions of date patterns, their component order, interpretation rules, locale dependencies, and conversion considerations.",
+  "category": "dates",
+  "subcategory": "date_formats",
+  "version": "1.0.0",
+  "status": "active",
+  "content_path": "knowledge/dates/date_formats.json",
+  "record_count": 6,
+  "supported_languages": [
+    "SAS",
+    "SQL",
+    "Python",
+    "JavaScript",
+    "Java",
+    "C++",
+    "C#"
+  ],
+  "supported_formats": [
+    "ddmmyy",
+    "mmddyyyy",
+    "yyyyMMdd",
+    "yyyy-MM-dd",
+    "ISO-8601",
+    "DATE9"
+  ],
+  "tags": [
+    "date",
+    "date-format",
+    "date-parsing",
+    "date-conversion",
+    "iso8601"
+  ],
+  "concepts": [
+    "DATE_PARSE",
+    "DATE_FORMAT",
+    "DATE_CONVERSION",
+    "DATE_COMPARISON"
+  ],
+  "when_to_retrieve": [
+    "When source or target code parses a date",
+    "When two date representations need comparison",
+    "When migrating date-related logic between languages"
+  ],
+  "when_not_to_retrieve": [
+    "When code only performs unrelated string operations"
+  ],
+  "retrieval_guidance": "Retrieve the specific format and language semantics required by the migration operation. Do not assume ambiguous date formats without locale or source context.",
+  "source_type": "combined",
+  "sources": [
+    "SRC_UNICODE_CLDR",
+    "SRC_RFC_3339",
+    "SRC_SAS_DOCS"
+  ],
+  "date_created": "2026-11-16",
+  "date_update": "2026-11-16",
+  "date_current": null,
+  "license": "See individual source records",
+  "schema_ref": "schemas/date.schema.json"
+}

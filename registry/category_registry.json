@@ -1,0 +1,76 @@
+{
+  "registry_version": "1.0.0",
+  "last_updated": "2026-11-16",
+  "categories": [
+    {
+      "category_id": "DATES",
+      "name": "Date and Time",
+      "description": "Date, time, timestamp patterns, calendar epochs, timezones, and ambiguity handling",
+      "directory": "knowledge/dates",
+      "tags": ["date", "datetime", "timestamp", "calendar", "epoch", "timezone", "iso8601"]
+    },
+    {
+      "category_id": "NUMBERS",
+      "name": "Numeric Representations",
+      "description": "Integer widths, floating-point IEEE-754 precision, decimal scales, rounding, and overflow",
+      "directory": "knowledge/numbers",
+      "tags": ["numeric", "integer", "float", "decimal", "precision", "rounding", "overflow"]
+    },
+    {
+      "category_id": "NULLS",
+      "name": "Null and Missing Values",
+      "description": "SQL NULL, Python None, JS undefined/null, SAS special missing values, and comparison logic",
+      "directory": "knowledge/nulls",
+      "tags": ["null", "none", "undefined", "missing", "nan", "three_valued_logic"]
+    },
+    {
+      "category_id": "STRINGS",
+      "name": "Strings and Encodings",
+      "description": "Character encodings, Unicode normalization, collation, case folding, and indexing",
+      "directory": "knowledge/strings",
+      "tags": ["string", "unicode", "utf8", "utf16", "collation", "casing"]
+    },
+    {
+      "category_id": "IDENTITY",
+      "name": "Identity and Reference Formats",
+      "description": "Synthetic public formats for email, phone, postal code, country codes, and UUIDs",
+      "directory": "knowledge/identity",
+      "tags": ["identity", "email", "phone", "postal", "country", "uuid"]
+    },
+    {
+      "category_id": "FINANCIAL",
+      "name": "Financial Representations",
+      "description": "Currency codes, minor units, bankers rounding, and payment card format references",
+      "directory": "knowledge/financial",
+      "tags": ["financial", "currency", "iso4217", "bankers_rounding"]
+    },
+    {
+      "category_id": "BOOLEANS",
+      "name": "Boolean and Truthiness",
+      "description": "Boolean types, truthiness evaluation rules, and integer/flag coercions",
+      "directory": "knowledge/booleans",
+      "tags": ["boolean", "truthiness", "flags", "coercion"]
+    },
+    {
+      "category_id": "STRUCTURED_DATA",
+      "name": "Structured Data Formats",
+      "description": "Serialization semantics for JSON, XML, CSV, and YAML",
+      "directory": "knowledge/structured_data",
+      "tags": ["json", "xml", "csv", "yaml", "serialization"]
+    },
+    {
+      "category_id": "LANGUAGES",
+      "name": "Language Semantics",
+      "description": "Deep semantics profiles for SAS, SQL, Python, JavaScript, Java, C++, and C#",
+      "directory": "knowledge/languages",
+      "tags": ["sas", "sql", "python", "javascript", "cpp", "java", "csharp"]
+    },
+    {
+      "category_id": "CROSS_LANGUAGE_MAPPINGS",
+      "name": "Cross-Language Compatibility Graph",
+      "description": "Pairwise mappings between source and target language representations with preservation rules",
+      "directory": "knowledge/cross_language_mappings",
+      "tags": ["mappings", "cross_language", "conversion", "compatibility_graph"]
+    }
+  ]
+}

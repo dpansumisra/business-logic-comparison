@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://universal-data-knowledge.org/schemas/date.schema.json",
+  "title": "DateKnowledgeSchema",
+  "type": "object",
+  "required": ["dataset_id", "version", "records"],
+  "properties": {
+    "dataset_id": { "type": "string" },
+    "version": { "type": "string" },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["record_id", "name", "concept_id"],
+        "properties": {
+          "record_id": { "type": "string" },
+          "concept_id": { "type": "string" },
+          "name": { "type": "string" },
+          "pattern": { "type": "string" },
+          "components": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["component", "position", "length"],
+              "properties": {
+                "component": { "type": "string" },
+                "position": { "type": "integer" },
+                "length": { "type": "integer" }
+              }
+            }
+          },
+          "example": { "type": ["string", "number"] },
+          "interpretation": { "type": "object" },
+          "ambiguity": {
+            "type": "object",
+            "properties": {
+              "is_ambiguous": { "type": "boolean" },
+              "reason": { "type": "string" }
+            }
+          },
+          "canonical_representation": { "type": "string" },
+          "validation_rules": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "related_concepts": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "source_references": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "epoch": { "type": "string" },
+          "unit": { "type": "string" },
+          "timezone_aware": { "type": "boolean" },
+          "precision": { "type": "string" }
+        }
+      }
+    }
+  }
+}
